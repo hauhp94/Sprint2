@@ -1,0 +1,53 @@
+<div class="body" >
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center h-100">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Sign In</h3>
+        </div>
+        <div class="card-body">
+          <form name="form" [formGroup]="formSignIn" (ngSubmit)="onSubmit()">
+            <div>
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input formControlName="username" type="text" class="form-control" placeholder="username"
+                       name="username">
+              </div>
+              <p style="color: red" *ngIf="formSignIn.get('username')?.hasError('required')
+                        && formSignIn.get('username')?.dirty">Please input username!!!</p>
+            </div>
+
+            <div class="mt-4">
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-key"></i></span>
+                </div>
+                <input formControlName="password" type="password" class="form-control" placeholder="password"
+                       name="password">
+              </div>
+              <p style="color: red" *ngIf="formSignIn.get('password')?.hasError('required')
+                        && formSignIn.get('password')?.dirty">Please input password!!!</p>
+            </div>
+
+            <div class="row align-items-center mt-4 remember">
+              <input name="remember-me" type="checkbox">Remember Me
+            </div>
+
+            <div class="form-group mt-4">
+              <button type="submit" class="btn login_btn">Login</button>
+              <button type="button" class="btn login_btn float-right" (click)="reset()">Reset</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-footer">
+          <div class="d-flex justify-content-center links">
+            Don't have an account?<a [routerLink]="'/signUp'">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

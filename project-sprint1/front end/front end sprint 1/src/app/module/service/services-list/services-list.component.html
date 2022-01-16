@@ -1,0 +1,165 @@
+<body style="background-image: url('../../../../assets/image/background.jpg')">
+  <div class="container-fluid pt-3"
+       style="font-family: Averta;font-size: 18px">
+    <div class="container-fluid col-md-11" style="color: #fff028">
+      <div>
+        <h2 style="color: #fff028">Service List</h2>
+      </div>
+    <div>
+      <form [formGroup]="searchNameCodePrice">
+        <div class="form-row container m-auto">
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label for="id" style="color: #fff028">Service Id:</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp"
+                   placeholder="Enter Service Id" id="id"  [(ngModel)]="code"
+                   formControlName="code">
+            <p *ngIf="searchNameCodePrice.controls.code.hasError('maxlength')" style="color: red"> Max length 50 kye
+              !!!</p>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label for="name" style="color: #fff028">Service Name:</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp"
+                   placeholder="Enter Service Name" id="name"  [(ngModel)]="name2"
+                   formControlName="name2">
+            <p *ngIf="searchNameCodePrice.controls.name2.hasError('maxlength')" style="color: red"> Max length 50 kye
+              !!!</p>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label for="gia" style="color: #fff028">Service Price:</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp"
+                   placeholder="Enter Service Price" id="gia"  [(ngModel)]="prices"
+                   formControlName="prices">
+            <p *ngIf="searchNameCodePrice.controls.prices.hasError('maxlength')" style="color: red"> Max length 50 kye
+              !!!</p>
+          </div>
+        </div>
+        <div class="form-group d-flex justify-content-center m-auto col-lg-12 col-md-12 col-sm-12">
+          <label> </label>
+          <div style="width: 200px">
+            <button class="btn btn-warning mt-2 m-2" (click)="searchNameCodePrices()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-search" viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+              <span style="font-family: Averta">Search</span>
+            </button>
+
+            <button class="btn btn-secondary mt-2 m-2" style="margin-top: 33px" type="button" (click)="resetForm()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span style="font-family: Averta">Reset</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered bg-dark mt-5 table-hover">
+          <thead>
+          <tr class="text-center" style="background-color: #222222">
+            <th *ngIf="showAdminBoard"></th>
+            <th scope="col" style="color: #fff028">Service ID</th>
+            <th scope="col" style="color: #fff028">Service Name</th>
+            <th scope="col" style="color: #fff028">Quantity</th>
+            <th scope="col" style="color: #fff028">Unit</th>
+            <th scope="col" style="color: #fff028">Prices (VND)</th>
+            <th scope="col" style="color: #fff028">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [hidden]="servicesPage.length > 0 ? true : false">
+            <th style="color: #fff028;text-align: center;font-size: 30px" colspan="7">{{messenger}} </th>
+          </tr>
+          <!--          checked-->
+          <tr *ngFor="let service of servicesPage">
+            <td *ngIf="showAdminBoard" align="center">
+              <input class="checkBox" [checked]="service.flag===3 ? true : false " name="checkBox"
+                     (click)="deleteArr(service.servicesId,service.code)" type="checkbox"
+                     style="width: 20px;height: 20px">
+
+            </td>
+            <td style="color: #fff028">{{service.code}}</td>
+            <td style="color: #fff028">{{service.name}}</td>
+            <td style="color: #fff028" align="right"> {{service.quantity | number}}</td>
+            <td style="color: #fff028">{{service.unit.name}}</td>
+            <td style="color: #fff028" align="center">{{service.prices  | number}}</td>
+            <td *ngIf="showAdminBoard" align="center">
+              <a class="btn btn-warning m-1" [routerLink]="['/services/edit/',service.servicesId]">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+                <span style="font-family: Averta"></span>
+              </a>
+              <a (click)="openDialog(service.servicesId)" class="btn btn-danger m-1" role="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row " *ngIf="showAdminBoard">
+        <div class="col-6">
+          <a [routerLink]="['/services/create']" style="color: #fff028;text-decoration: none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                 class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+              <path
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+            </svg>
+            Add new Service
+          </a>
+        </div>
+        <div class=" col-6 d-flex justify-content-end">
+          <button [disabled]="this.deleteServicesId.length <= 0 ? true : false " class="btn btn-danger"
+                  style="height: 40px" id="delete" (click)="openDialogAll()"> Delete
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-trash-fill" viewBox="0 0 16 16">
+              <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end pt-2 ">
+        <h5 [hidden]="checkNumber" style="color: red">Nhập vào phải là số!!!</h5>
+        <ul class="pagination ">
+          <li class="page-item"><input type="number" min="1" class="page-link bg-dark text-warning"
+                                       style="width: 70px" [(ngModel)]="inputPage"
+                                            (keyup)="changePage($event)"></li>
+          <li class="page-item "><a class="page-link bg-dark" (click)="first()" style="color: #fff028">First</a></li>
+          <li class="page-item "><a class="page-link bg-dark " (click)="previous()"
+                                    style="color: #fff028">Previous</a></li>
+          <li class="page-item"><a class="page-link bg-dark " style="color: #fff028">{{this.p + 1}}</a></li>
+          <li class="page-item"><p class="page-link bg-dark " style="color: #fff028">/</p></li>
+          <li class="page-item" [hidden]="this.ps.length > 0 ? false : true "><a class="page-link bg-dark "
+                                                                                 style="color: #fff028">{{this.ps.length}}</a>
+          </li>
+          <li class="page-item" [hidden]="this.ps.length == 0 ? false : true ">
+            <a class="page-link bg-dark " style="color: #fff028">{{this.ps.length + 1}}</a>
+          </li>
+          <li class="page-item"><a class="page-link bg-dark" (click)="next()" style="color: #fff028">Next</a></li>
+          <li class="page-item "><a class="page-link bg-dark" (click)="last()" style="color: #fff028">Last</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

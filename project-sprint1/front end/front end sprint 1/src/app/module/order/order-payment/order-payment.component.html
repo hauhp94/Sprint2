@@ -1,0 +1,9 @@
+<div class="container-dialog">
+  <h5 class="modal-title">Payment confirmation</h5>
+  <p>Customer name :<span style="color:red;">{{nameCustomer}}</span></p>
+  <p>Payment amount :<span style="color:red;">{{totalMoneys}} VND</span></p>
+  <div class="container-button">
+    <button  style="margin-right: 10px;min-width: 80px;border: none" type="button" class="btn btn-secondary" (click)="close()">Close</button>
+    <button style="margin-left: 10px;min-width: 80px" type="button" class="btn btn-primary" (click)="confirm()">Confirm</button>
+  </div>
+</div>

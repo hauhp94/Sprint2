@@ -1,0 +1,169 @@
+<div
+  style="background-image: url('assets/image/bg.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
+  <div class="container py-5" style=" border-radius: 5px">
+    <div style="padding: 10%; background: rgba(0, 0, 0, 0.5);">
+      <h2 style="text-align: center;color: #FFC312 " CLASS="averta">CREATE COMPUTER</h2>
+      <hr>
+
+      <div>
+        <form [formGroup]="formComputer" >
+          <!--1-->
+          <div class="row mt-3 averta">
+            <div class="col-md-6"><span style="font-size: 22px;color: #FFF448">Computer ID<span
+              style="color: red">(*)</span></span>
+              <input type="text" class="form-control border22px "
+                     formControlName="computerCode">
+              <div class="form-text" *ngIf="formComputer.get('computerCode')
+          .hasError('required') && formComputer.get('computerCode')
+          .touched" style="color: red">Computer ID ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('computerCode')
+          .hasError('pattern')" style="color: red">Enter the Computer Code
+                in the format CPXXXX with an X from 0-9
+              </div>
+            </div>
+
+
+            <div class="col-md-6"><span style="font-size: 22px;color: #FFF448">Location<span
+              style="color: red">(*)</span></span>
+              <input type="text" class="form-control border22px"
+                     formControlName="location">
+              <div class="form-text" *ngIf="formComputer.get('location')
+          .hasError('required') && formComputer.get('location')
+          .touched" style="color: red">Location ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('location')
+          .hasError('pattern') " style="color: red">Location is AXXXX or BXXXX or
+                CXXXX or DXXXX with X from 0-9
+              </div>
+            </div>
+
+          </div>
+          <!--2-->
+          <div class="row mt-3 averta">
+
+            <div class="col-lg-4"><span style="font-size: 22px;color: #FFF448">Start used date<span
+              style="color: red">(*)</span></span>
+              <input type="date" class="form-control border22px"
+                     formControlName="startUsedDate">
+              <div class="form-text" *ngIf="formComputer.get('startUsedDate')
+          .hasError('required') && formComputer.get('startUsedDate')
+          .touched" style="color: red">Start used date ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('startUsedDate')
+          .hasError('dateStart') " style="color: red">startUsedDate must <= date now
+              </div>
+            </div>
+            <div class="col-lg-4"><span style="font-size: 22px;color: #FFF448">Warranty period<span
+              style="color: red">(*)</span></span>
+              <input type="text" class="form-control border22px"
+                     formControlName="warrantyPeriod">
+              <div class="form-text" *ngIf="formComputer.get('warrantyPeriod')
+          .hasError('required') && formComputer.get('warrantyPeriod')
+          .touched" style="color: red">Warranty period ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('warrantyPeriod')
+          .hasError('maxlength')" style="color: red">Warranty period ís too long.
+              </div>
+            </div>
+            <div class="col-lg-4"><span style="font-size: 22px;color: #FFF448">Configuration<span
+              style="color: red">(*)</span></span>
+              <input type="text" class="form-control border22px"
+                     formControlName="configuration">
+              <div class="form-text" *ngIf="formComputer.get('configuration')
+          .hasError('required') && formComputer.get('configuration')
+          .touched" style="color: red">Configuration ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('configuration')
+          .hasError('maxlength')" style="color: red">Configuration is too long.
+              </div>
+            </div>
+          </div>
+          <!--3-->
+          <!--gr2-->
+          <div class="row mt-3 averta">
+            <!--gr1-->
+            <div class="col-md-4" formGroupName="computerStatus"><span
+              style="font-size: 22px;color: #FFF448">Status<span style="color: red">(*)</span> </span>
+              <select class="form-control  border22px" formControlName="name">
+                <option value="Đang chờ khách">Đang chờ khách</option>
+                <option value="Đang sử dụng">Đang sử dụng</option>
+                <option value="Máy Hỏng">Máy Hỏng</option>
+                <option value="Đang sửa">Đang sửa</option>
+              </select>
+              <div class="form-text" *ngIf="formComputer.get('computerStatus.name')
+          .hasError('required') && formComputer.get('computerStatus.name')
+          .touched" style="color: red">Status ís required.
+              </div>
+            </div>
+
+            <div class="col-md-4" formGroupName="computerType"><span style="font-size: 22px;color: #FFF448">Type<span
+              style="color: red">(*)</span></span>
+              <select class="form-control border22px" formControlName="name">
+                <option value="Loại 1">Loại 1</option>
+                <option value="Loại 2">Loại 2</option>
+                <option value="Loại 3">Loại 3</option>
+              </select>
+              <div class="form-text" *ngIf="formComputer.get('computerType.name')
+          .hasError('required') && formComputer.get('computerType.name')
+          .touched" style="color: red">Type ís required.
+              </div>
+            </div>
+            <!--gr3-->
+            <div class="col-md-4" formGroupName="computerManufacturer"><span style="font-size: 22px;color: #FFF448">Manufacturer<span
+              style="color: red">(*)</span></span>
+              <select class="form-control border22px" formControlName="name">
+                <option value="Dell">Dell</option>
+                <option value="Acer">Acer</option>
+                <option value="Lenovo">Lenovo</option>
+              </select>
+              <div class="form-text" *ngIf="formComputer.get('computerManufacturer.name')
+          .hasError('required') && formComputer.get('computerManufacturer.name')
+          .touched" style="color: red">Manufacturer ís required.
+              </div>
+            </div>
+
+          </div>
+          <input type="text" class="form-control is-invalid border22px" formControlName="flagDelete" hidden>
+
+          <hr>
+          <div class="text-center">
+            <button class="btn btn-warning" (click)="back()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              <span style="font-family: Averta">Back</span>
+            </button>
+            <button class="btn btn-secondary mx-3" (click)="reset()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span style="font-family: Averta">Reset</span>
+            </button>
+            <button class="btn btn-warning" [disabled]="formComputer.invalid" (click)="create()">
+              <svg xmlns
+                     ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+        bi-pencil-square" viewBox="0 0 16 16">
+                <path d
+                        ="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+        2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+        .196-.12l6.813-6.814z"/>
+                <path fill-rule
+                        ="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+        1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+        2.5v11z"/>
+              </svg>
+              <span style="font-family: Averta">Create</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

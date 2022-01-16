@@ -1,0 +1,146 @@
+<div
+  style="background-image: url('../../../../assets/image/background.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
+  <div class="container py-5" style=" border-radius: 5px">
+    <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);border: 1px solid black;
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);">
+      <h2 style="text-align: center;color: #FFC312 ; font-family:  Averta ">Please enter full information !</h2>
+      <hr>
+
+
+      <form [formGroup]="createForm">
+
+        <div class="mt-4">
+          <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
+          <input autofocus type="text" class="form-control" placeholder="Enter Services Name "
+                 [ngClass]="createForm.controls.name.valid? 'is-valid':'is-invalid'"
+                 formControlName="name">
+          <div class="style-error" *ngIf="createForm.controls.name.hasError('required') &&
+           createForm.controls.name.touched "> Please enter service name
+          </div>
+          <div class="style-error">
+            {{listError.name}}
+          </div>
+        </div>
+
+
+        <div class="mt-4">
+          <label class="style-span">Quantity (<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity"
+                 [ngClass]="createForm.controls.quantity.valid? 'is-valid':'is-invalid'">
+          <div class="style-error" *ngIf="createForm.controls.quantity.hasError('required') &&
+           createForm.controls.quantity.touched"> Please enter quantity
+          </div>
+          <div [hidden]="createForm.controls.quantity.errors.required" class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
+           createForm.controls.quantity.touched "> Please enter the quantity as a positive integer
+          </div>
+          <div class="style-error">
+            {{listError.quantity}}
+          </div>
+        </div>
+
+
+        <div class="mt-4">
+          <label class="style-span">Unit (<span style="color: red">*</span>)</label>
+          <select formControlName="unit" class="custom-select"
+                  [ngClass]="createForm.controls.unit.valid? 'is-valid':'is-invalid'" id="inputGroupSelect01">
+            <option value="" selected>-- Choose unit --</option>
+            <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
+          </select>
+          <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
+           createForm.controls.unit.touched"> Please choose unit
+          </div>
+          <div class="style-error">
+            {{listError.unit}}
+          </div>
+        </div>
+
+
+        <div class="mt-4">
+          <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
+                 [ngClass]="createForm.controls.prices.valid? 'is-valid':'is-invalid'" (keyup)="changePrice2($event)">
+          <div class="style-error" *ngIf="createForm.controls.prices.hasError('required') &&
+           createForm.controls.prices.touched">Please enter price
+          </div>
+          <div class="style-span" *ngIf="changePrice!=''"> ( Price : {{changePrice | number}} )</div>
+          <div [hidden]="createForm.controls.prices.errors.required" class="style-error" *ngIf="createForm.controls.prices.hasError('min') &&
+           createForm.controls.prices.touched"> Please enter a price greater than 1000
+          </div>
+          <div [hidden]="createForm.controls.prices.errors.required && createForm.controls.prices.errors.min "
+               class="style-error" *ngIf="createForm.controls.prices.hasError('pattern') &&
+           createForm.controls.prices.touched"> Please enter price number
+          </div>
+          <div class="style-error">
+            {{listError.prices}}
+          </div>
+        </div>
+
+
+        <div class="mt-4">
+          <label class="style-span">Image (<span style="color: red">*</span>)</label>
+          <div class="input-group ">
+            <div class="custom-file">
+              <input formControlName="image" (change)="showPreview($event)" type="file" class="custom-file-input"
+                     id="validatedCustomFile" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">
+              <label class="custom-file-label" for="validatedCustomFile">
+                {{newsImageName.value !== '' ? newsImageName.value : 'Choose file'}}</label>
+            </div>
+          </div>
+          <div class="style-error" *ngIf="createForm.controls.image.hasError('required') &&
+           createForm.controls.prices.touched">Please enter image
+          </div>
+          <div class="style-error">
+            {{listError.image}}
+          </div>
+        </div>
+
+        <!--        <img style="border: 1px solid white;width: 100%" src="{{urlImage}}">-->
+        <div class="row mt-4" *ngIf="isImage">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <img style="border: 1px solid white;width: 100% ; height: 300px" src="{{urlImage}}">
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+
+        <hr>
+        <div class="text-center" >
+          <button class="btn btn-warning" (click)="back()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            <span  style="font-family: Averta">Back</span>
+          </button>
+
+          <button  class="btn btn-secondary mx-3" (click)="reset()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                 class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>
+            <span  style="font-family: Averta">Reset</span>
+          </button>
+
+
+          <button type="submit" class="btn btn-warning" [disabled]="createForm.invalid" (click)="create()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+          2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+          .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+          1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+          2.5v11z"/>
+            </svg>
+            <span style="font-family: Averta">Create</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

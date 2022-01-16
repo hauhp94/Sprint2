@@ -1,0 +1,34 @@
+<!--huynh code-->
+
+<div id="service-detail">
+  <div>
+    <h1 id="content">Use service in detail</h1>
+  </div>
+  <table class="table table-striped table-dark" id="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Service name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit</th>
+      <th scope="col">Prices</th>
+      <th scope="col">Total prices</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let orderDetail of listOderDetail,index as i">
+      <th scope="row">{{i + 1}}</th>
+      <td><label>{{orderDetail.services.name}}</label></td>
+      <td><label>{{orderDetail.quantity}} </label></td>
+      <td><label>{{orderDetail.services.unit.name}}</label></td>
+      <td><label>{{disPlayMoney(orderDetail.services.prices)}}</label></td>
+      <td><label>{{disPlayMoneyTotal(orderDetail)}} VND</label></td>
+    </tr>
+    </tbody>
+  </table>
+  <div id="button-container">
+    <button type="button" class="btn btn-secondary" id="button" (click)="close()">OK</button>
+  </div>
+</div>
+
+

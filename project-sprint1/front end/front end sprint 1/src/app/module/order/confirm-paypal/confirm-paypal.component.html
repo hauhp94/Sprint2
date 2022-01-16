@@ -1,0 +1,9 @@
+<div class="container-view">
+  <div class="dialog">
+    <h3>Payment confirmation</h3>
+    <div class="item">Customer name :<b>{{order.customer.fullName}}</b> </div>
+    <div class="item">Customer email :<b>{{order.customer.email}}</b></div>
+    <div class="item">Total amount : <b>{{totalMoneyStr}} VND</b></div>
+    <button style="margin-bottom: 30px" type="button" class="btn btn-outline-primary" (click)="confirm()">Confirm</button>
+  </div>
+</div>

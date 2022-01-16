@@ -1,0 +1,101 @@
+.zoom img {
+  display: block;
+  transition: all .3s ease;
+}
+
+.zoom img:hover {
+  transform: scale(1.5);
+}
+
+.zoom p {
+  display: block;
+  overflow: hidden;
+}
+
+@media only screen and (min-width: 751px) and (max-width: 860px) {
+  .imgrp {
+    width: 60px;
+  }
+}
+
+@media only screen and (min-width: 651px) and (max-width: 750px) {
+  .imgrp {
+    width: 60px;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 650px) {
+  .imgrp {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 451px) and (max-width: 550px) {
+  .imgrp {
+    width: 45px;
+  }
+}
+
+@media only screen and (min-width: 350px) and (max-width: 450px) {
+  .imgrp {
+    width: 45px;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 860px) {
+  .imageHeight {
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 400px) {
+  .imageHeight {
+    height: 50px;
+  }
+}
+
+.show {
+  position: relative;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.2);
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+}
+
+.show:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.element {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

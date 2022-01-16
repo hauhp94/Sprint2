@@ -1,0 +1,256 @@
+<body background="../../../../assets/image/background.jpg"
+      style="background-repeat: no-repeat; background-size: 100% 100%;">
+<div style="font-family: Averta; font-size: 18px" class="container-fluid pt-3">
+  <div class="container-fluid col-md-11" style="color: #fff028">
+    <div>
+      <h2 style="color: #fff028">Computer List</h2>
+    </div>
+    <div>
+      <form [formGroup]="searchComputerForm">
+        <div class="form-row container m-auto">
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label for="exampleInputEmail1">Computer Id:</label>
+            <input type="text" class="form-control" formControlName="computerId" id="exampleInputEmail1"
+                   placeholder="Enter computerId" [(ngModel)]="computerId">
+            <p style="color: red" *ngIf="searchComputerForm.controls.computerId.hasError('pattern')">
+              Computer Id should like CPXXXX (X: 0-9).
+            </p>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label>Start used date from:</label>
+            <input type="date" class="form-control" formControlName="startUsedDateFrom" aria-describedby="emailHelp"
+                   placeholder="Enter email" [(ngModel)]="startDateFrom">
+            <p style="color: red" *ngIf="searchComputerForm.controls.startUsedDateFrom.hasError('required') &&
+      searchComputerForm.controls.startUsedDateFrom.dirty">
+              Input start used date from, please.
+            </p>
+            <p style="color: red" *ngIf="searchComputerForm.controls.startUsedDateFrom.hasError('errorDateFromNow')
+&& searchComputerForm.controls.startUsedDateFrom.dirty">
+              Input start used date from < date now, please.
+            </p>
+          </div>
+          <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <label>Status:</label>
+            <select class="form-control" formControlName="computerStatus" [(ngModel)]="statusSearch">
+              <option selected value="">--- Choose Status ----</option>
+              <option *ngFor="let i of listComputerStatus" value="{{i.name}}">{{i.name}}</option>
+            </select>
+          </div>
+          <!--<div class="form-group col-lg-3 col-md-3 col-sm-6">
+          </div>-->
+        </div>
+        <div class="form-row container m-auto">
+          <div class="form-group col-md-4 col-sm-6">
+            <label for="exampleInputEmail2">Location:</label>
+            <input type="text" class="form-control" formControlName="location" id="exampleInputEmail2"
+                   placeholder="Enter Location" [(ngModel)]="location">
+            <p style="color: red" *ngIf="searchComputerForm.controls.location.hasError('pattern')">
+              Location should like AXXXX or BXXXX or CXXXX (X: 0-9).
+            </p>
+          </div>
+          <div class="form-group col-md-4 col-sm-6">
+            <label>Start used date to:</label>
+            <input type="date" class="form-control" formControlName="startUsedDateTo" [(ngModel)]="startDateTo">
+            <p style="color: red" *ngIf="searchComputerForm.controls.startUsedDateTo.hasError('required') &&
+      searchComputerForm.controls.startUsedDateTo.dirty">
+              Input start used date to, please.
+            </p>
+            <p style="color: red" *ngIf="searchComputerForm.errors?.errorDateTo &&
+      searchComputerForm.controls.startUsedDateTo.dirty">
+              Input start used date to > start used date from, please.
+            </p>
+            <p style="color: red" *ngIf="searchComputerForm.controls.startUsedDateTo.hasError('errorDateToNow')
+&& searchComputerForm.controls.startUsedDateTo.dirty">
+              Input start used date to < date now, please.
+            </p>
+          </div>
+          <div class="form-group col-md-4 col-sm-6">
+            <label>Type Computer:</label>
+            <div>
+              <select class="form-control" formControlName="computerType"
+                      [(ngModel)]="computerTypeSearch">
+                <option selected value="">--- Choose Type ----</option>
+                <option *ngFor="let i of listComputerType" value="{{i.name}}">{{i.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group d-flex justify-content-center m-auto col-lg-12 col-md-12 col-sm-12">
+          <label> </label>
+          <div style="width: 200px">
+            <button class="btn btn-warning mt-2 m-2" (click)="searchComputer()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-search" viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+              <span style="font-family: Averta">Search</span>
+            </button>
+
+            <button class="btn btn-secondary mt-2 m-2" style="margin-top: 33px" type="button" (click)="resetForm()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span style="font-family: Averta">Reset</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered bg-dark mt-5 table-hover">
+          <thead>
+          <tr class="text-center" style="background-color: #222222;color: #fff028">
+            <th *ngIf="showAdminBoard"></th>
+            <th scope="col">Computer Id</th>
+            <th scope="col">Status</th>
+            <th scope="col">Location</th>
+            <th scope="col">Start used date from</th>
+            <th scope="col">Configuration</th>
+            <th scope="col">Type</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Warranty period</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let i of listComputerPage">
+            <td><input style="width: 20px; height: 20px" class="checkBox mt-1" type="checkbox"
+                       [checked]="i.flagDelete == 2 ? true : false"
+                       value="{{i.computerId}}" (click)="addComputerId(i.computerId, i.computerCode)"></td>
+            <td>
+              <div
+                style="width: 150px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">{{i.computerCode}}</div>
+            </td>
+            <td>
+              <div style="width: 170px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                <svg *ngIf="i.computerStatus.computerStatusId == 1" xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="green"
+                     class="bi bi-circle-fill" viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="8"/>
+                </svg>
+                <svg *ngIf="i.computerStatus.computerStatusId == 4" xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="blue"
+                     class="bi bi-circle-fill" viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="8"/>
+                </svg>
+                <svg *ngIf="i.computerStatus.computerStatusId == 2" xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="gray"
+                     class="bi bi-circle-fill" viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="8"/>
+                </svg>
+                <svg *ngIf="i.computerStatus.computerStatusId == 3" xmlns="http://www.w3.org/2000/svg" width="16"
+                     height="16" fill="red"
+                     class="bi bi-circle-fill" viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="8"/>
+                </svg>
+                {{i.computerStatus.name}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 100px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.location}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 200px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.startUsedDate | date}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 370px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.configuration}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 100px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.computerType.name}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 150px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.computerManufacturer.name}}
+              </div>
+            </td>
+            <td>
+              <div style="width: 180px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                {{i.warrantyPeriod}}
+              </div>
+            </td>
+            <td align="center">
+              <div style="width: 100px; overflow: hidden">
+                <a class="btn btn-warning m-1" [routerLink]="['/update-computer/',i.computerId]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                       class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg>
+                </a>
+                <button type="button" class="deleteButton btn btn-danger m-1"
+                        (click)="deleteComputer(i.computerId, i.computerCode)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                       class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--<button class="btn btn-success ml-3 float-right">Save</button>-->
+      <div *ngIf="showAdminBoard" class="mt-3">
+        <button [disabled]="this.listComputerId.length <= 0" class="btn btn-danger ml-3 float-right"
+                (click)="deleteComputers()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+               class="bi bi-trash"
+               viewBox="0 0 16 16">
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd"
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+          </svg>
+          <span style="font-family: Averta">Delete</span>
+        </button>
+        <div>
+          <a style="color: #ffc107" [routerLink]="'/create-computer'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                 class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+              <path
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+            </svg>
+            Add new Computer
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid col-md-11 d-flex justify-content-end">
+    <ul class="pagination ">
+      <li class="page-item"><input type="number" min="1" max="{{this.ps.length}}" style="width: 70px"
+                                        class="page-link bg-dark text-warning" [(ngModel)]="searchPageInput"
+                                        (change)="searchPage()"></li>
+      <li class="page-item "><a class="page-link bg-dark text-warning" (click)="firstPage()">First</a></li>
+      <li class="page-item " *ngIf="this.p != 0"><a class="page-link bg-dark text-warning" (click)="previousPage()">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link bg-dark text-warning">{{this.p + 1}}</a></li>
+      <li class="page-item"><p class="page-link bg-dark text-warning">/</p></li>
+      <li class="page-item"><a class="page-link bg-dark text-warning">{{this.ps.length}}</a></li>
+      <li class="page-item" *ngIf="this.p < this.ps.length - 1"><a class="page-link bg-dark text-warning"
+                                                                   (click)="nextPage()">Next</a></li>
+      <li class="page-item "><a class="page-link bg-dark text-warning" (click)="lastPage()">Last</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>

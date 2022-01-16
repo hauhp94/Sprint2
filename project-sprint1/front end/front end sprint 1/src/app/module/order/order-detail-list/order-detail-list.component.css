@@ -1,0 +1,25 @@
+
+#content{
+  text-align: center;
+ margin-bottom: 20px;
+  color: #ffc107;
+}
+#table{
+  color: #ffc107;
+}
+#button{
+  display: inline-block;
+  float: right;
+  width: 80px;
+}
+#button-container{
+  padding:5px 0px 25px 0px;
+  color: #ffc107;
+}
+body{
+  color: #fff028;
+  font-family: Averta;
+  font-size: 18px;
+}
+
+

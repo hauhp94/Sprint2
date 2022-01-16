@@ -1,0 +1,58 @@
+<!--Header-->
+<nav class="navbar navbar-expand-xl navbar-light sticky-top" style="background-color: black">
+  <img src="assets/image/logoNavbar.png" width=8% [routerLink]="'/'"/>
+  <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: black">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/'"><p style=" font-size: 20px;font-weight: bold;">
+          Home</p></a>
+      </li>
+      <li *ngIf="showModAdminBoard" class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/customer/list'"><p style=" font-size: 20px;font-weight: bold;">Customer</p>
+        </a>
+      </li>
+      <li *ngIf="showAdminBoard" class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/employee/list'"><p
+          style=" font-size: 20px;font-weight: bold;">Employee</p></a>
+      </li>
+      <li *ngIf="showModAdminBoard" class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/services/list'"><p
+          style=" font-size: 20px;font-weight: bold;">Service</p></a>
+      </li>
+      <li *ngIf="showAdminBoard" class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/statistic'"><p
+          style=" font-size: 20px;font-weight: bold;">Statistical</p></a>
+      </li>
+      <li *ngIf="showModAdminBoard" class="nav-item link-1 px-lg-2">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/computer-list'"><p
+          style=" font-size: 20px;font-weight: bold;">Computer</p></a>
+      </li>
+      <li *ngIf="showModAdminBoard" class="nav-item link-1">
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/order/list'"><p
+          style=" font-size: 20px;font-weight: bold;">Payment</p>
+        </a>
+      </li>
+    </ul>
+    <div *ngIf="!isLogged" class="d-flex justify-content-end">
+      <button class="btn  btn-warning mr-1" [routerLink]="'/login'">
+        <span>Login</span></button>
+      <button class="btn  btn-warning" [routerLink]="'/signUp'">
+        <span>Register</span>
+      </button>
+    </div>
+    <div *ngIf="isLogged" class="d-flex justify-content-end">
+      <span *ngIf="showUserBoard" style="color: #fff028;margin-right: 7px;font-size: 18px;border: #fff028 1px solid;border-radius: 7px;padding: 3px 5px 0 5px"><a [routerLink]="'guest-homepage/home'" style="color: #fff028">{{username}}</a></span>
+      <span *ngIf="!showUserBoard" style="color: #fff028;margin-right: 7px;font-size: 18px;border: #fff028 1px solid;border-radius: 7px;padding: 3px 5px 0 5px">{{username}}</span>
+      <div>
+        <button class="btn btn-warning" (click)="logout()">
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

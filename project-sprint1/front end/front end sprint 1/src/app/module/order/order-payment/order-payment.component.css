@@ -1,0 +1,27 @@
+.container-dialog {
+  text-align: center;
+  width: 400px;
+  height: auto;
+  margin-left: 8%;
+  color: #000000;
+  font-size: 20px;
+  font-family: Arial;
+}
+
+.container-button {
+  padding-top: 10px;
+  display: inline-block;
+  margin:10px
+}
+
+.button {
+
+}
+
+h5 {
+  margin-bottom: 3%;
+  color: blue;
+  font-size: 28px;
+  font-family: Arial;
+
+}

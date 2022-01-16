@@ -1,0 +1,28 @@
+body{
+  font-family:Averta;
+}
+.show-info{
+  background-image: url('../../../../assets/image/background.jpg');
+  background-size: cover;background-repeat: no-repeat;height: 100%;
+}
+.bg{
+  padding: 15px 10%; background: rgba(0, 0, 0, 0.5);border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);
+}
+h3{
+  text-align: center;color: #FFC312 ;
+}
+.style-span{
+  font-size: 17px;
+  color: #FFF448;
+}
+.style-error{
+  color: red;
+  font-size: 15px
+}
+.table th, .table td{
+  padding: 0;
+}
+.card{
+  background-color: none;
+}

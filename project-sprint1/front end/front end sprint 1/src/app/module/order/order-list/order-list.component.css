@@ -1,0 +1,22 @@
+
+body{
+  color: #fff028;
+  font-family: Averta;
+  font-size: 18px;
+}
+.order{
+  background-image: url("src/assets/image/background.jpg");
+}
+h3{
+  color: #fff028;
+  font-family: Averta;
+  position: relative;
+  bottom: -23px;
+}
+.view{
+  position: relative;
+  left: 69.4%;
+}
+table tbody tr:nth-child(odd) {
+  background-color: #333333;
+}

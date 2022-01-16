@@ -1,0 +1,152 @@
+<div
+  style="background-image: url('../../../../assets/image/background.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
+  <div class="container py-5" style=" border-radius: 5px">
+    <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);">
+      <h2 style="text-align: center;color: #FFC312;font-family: Averta ">Edit Game</h2>
+      <h5 style="text-align: center;color: #FFC312;font-family: Averta ">Please enter the information you want to change
+        !</h5>
+      <hr>
+      <form [formGroup]="gameForm" novalidate>
+        <div class="mt-3">
+          <label for="name" style="font-size: 22px;color: #FFF448;font-family: Averta">Name <span
+            style="color: red">(*)</span></label>
+          <input #nameinput id="name" formControlName="name" type="text" class="form-control"
+                 [ngClass]="gameForm.controls.name.valid? 'is-valid':'is-invalid'"
+                 aria-describedby="validationServer03Feedback" required>
+          <div
+            *ngIf="!gameForm.controls.name?.valid && (gameForm.controls.name?.dirty || gameForm.controls.name?.touched)">
+            <div [hidden]="!gameForm.controls.name.errors.required">
+              <p style="color: red">Name is required !</p>
+            </div>
+            <div [hidden]="!gameForm.controls.name.errors.maxlength">
+              <p style="color: red">Name cannot be longer than 40 characters !</p>
+            </div>
+          </div>
+          <div style="color: red">{{listError.name}}</div>
+        </div>
+        <div class="mt-3">
+          <label for="trailer" style="font-size: 22px;color: #FFF448;font-family: Averta">Trailer <span
+            style="color: red">(*)</span></label>
+          <input formControlName="trailer" type="text" class="form-control"
+                 [ngClass]="gameForm.controls.trailer.valid? 'is-valid':'is-invalid'" id="trailer"
+                 aria-describedby="validationServer03Feedback" required>
+          <div
+            *ngIf="!gameForm.controls.trailer?.valid && (gameForm.controls.trailer?.dirty || gameForm.controls.trailer?.touched)">
+            <div [hidden]="!gameForm.controls.trailer.errors.required">
+              <p style="color: red">Trailer is required !</p>
+            </div>
+          </div>
+          <div style="color: red">{{listError.trailer}}</div>
+        </div>
+        <div class="mt-3">
+          <label for="gameType" style="font-size: 22px;color: #FFF448;font-family: Averta">Game Type <span
+            style="color: red">(*)</span></label>
+          <select [compareWith]="compareFn" formControlName="gameType" class="custom-select"
+                  [ngClass]="gameForm.controls.gameType.valid? 'is-valid':'is-invalid'" id="gameType">
+            <option value="" selected>-- Choose Game Type --</option>
+            <option *ngFor="let item of gameType" [ngValue]="item">{{item.name}}</option>
+          </select>
+          <div
+            *ngIf="!gameForm.controls.gameType?.valid && (gameForm.controls.gameType?.dirty || gameForm.controls.gameType?.touched)">
+            <div [hidden]="!gameForm.controls.gameType.errors.required">
+              <p style="color: red">Game Type is required !</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="image" style="font-size: 22px;color: #FFF448;font-family: Averta">Image <span
+            style="color: red">(*)</span></label>
+
+          <div class="input-group">
+            <div class="custom-file">
+              <input (change)="showPreview($event)" type="file" class="custom-file-input"
+                     id="image" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">
+              <label class="custom-file-label" for="image"></label>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <img style="border: 1px solid white;width: 100%" src="{{imageGame}}">
+            </div>
+            <div class="col-2"></div>
+          </div>
+          <div
+            *ngIf="!gameForm.controls.image?.valid && (gameForm.controls.image?.dirty || gameForm.controls.image?.touched)">
+            <div [hidden]="!gameForm.controls.image.errors.required">
+              <p style="color: red">Image is required !</p>
+            </div>
+          </div>
+          <div style="color: red">{{listError.image}}</div>
+        </div>
+        <div class="mt-3">
+          <label for="gaming" style="font-size: 22px;color: #FFF448;font-family: Averta">Gaming <span
+            style="color: red">(*)</span></label>
+          <input [(ngModel)]="changeGaming" formControlName="gaming" type="text" class="form-control"
+                 [ngClass]="gameForm.controls.gaming.valid? 'is-valid':'is-invalid'" id="gaming"
+                 aria-describedby="validationServer03Feedback" required>
+          <div
+            *ngIf="!gameForm.controls.gaming?.valid && (gameForm.controls.gaming?.dirty || gameForm.controls.gaming?.touched)">
+            <div [hidden]="!gameForm.controls.gaming.errors.required">
+              <p style="color: red">Gaming is required !</p>
+            </div>
+            <div [hidden]="!gameForm.controls.gaming.errors.pattern">
+              <p style="color: red">Gaming must be a integer !</p>
+            </div>
+          </div>
+          <div style="color: red">{{listError.gaming}}</div>
+          <div *ngIf="changeGaming!=''" style="color: #fff028"> ( Gaming : {{changeGaming | number}} )</div>
+        </div>
+        <div class="mt-3">
+          <label for="content" style="font-size: 22px;color: #FFF448;font-family: Averta"> Content <span
+            style="color: red">(*)</span></label>
+          <ckeditor id="content" formControlName="content" [editor]="Editor"></ckeditor>
+          <div
+            *ngIf="!gameForm.controls.content?.valid && (gameForm.controls.content?.dirty || gameForm.controls.content?.touched)">
+            <div [hidden]="!gameForm.controls.content.errors.required">
+              <p style="color: red">Content is required !</p>
+            </div>
+            <div [hidden]="!gameForm.controls.content.errors.maxlength">
+              <p style="color: red">Content cannot be longer than 2000 characters !</p>
+            </div>
+          </div>
+          <div style="color: red">{{listError.content}}</div>
+        </div>
+        <hr>
+        <div class="text-center">
+          <button (click)="back()" class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            <span style="font-family: Averta">Back</span>
+          </button>
+          <button (click)="reset()" class="btn btn-secondary mx-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                 class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>
+            <span style="font-family: Averta">Reset</span>
+          </button>
+          <button (click)="editGame()" (keydown.enter)="$event" type="submit" [disabled]="!gameForm.valid"
+                  class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+                    2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+                    .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+                    1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+                    2.5v11z"/>
+            </svg>
+            <span style="font-family: Averta">Edit</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

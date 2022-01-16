@@ -1,0 +1,21 @@
+<div>
+
+  <div style="text-align: center" [hidden]="!check">
+    <img src="assets/image/delete.png"  width="40%">
+    <h3 class="text-center">Delete confirm</h3>
+    <h5>Delete services <span style="color:red;" *ngFor="let code of listCode">{{code}}</span>, are you sure?</h5>
+    <h5 style="color: red">(*) Note: This action cannot be undone!</h5>
+    <button type="button" class="btn btn-secondary mr-2 mt-3" (click)="onNoClick()">Close</button>
+    <button type="button" class="btn btn-danger mt-3" (click)="deleteServicesArr()">Delete</button>
+  </div>
+
+
+  <div style="text-align: center" [hidden]="check">
+    <img src="assets/image/delete.png"  width="40%">
+    <h3 class="text-center">Delete confirm</h3>
+    <h5>Delete service <span style="color:red;">{{code}}</span>, are you sure?</h5>
+    <h5 style="color: red">(*) Note: This action cannot be undone!</h5>
+    <button type="button" class="btn btn-secondary mr-2 mt-3" (click)="onNoClick()">Close</button>
+    <button type="button" class="btn btn-danger mt-3" (click)="delete()">Delete</button>
+  </div>
+</div>

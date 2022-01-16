@@ -1,0 +1,173 @@
+<!--SignUp Form-->
+<div id="signUpForm">
+  <div class="container py-5" style="border-radius: 5px">
+    <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);">
+      <h2 style="text-align: center;color: #FFC312; font-family: Averta">Sign Up</h2>
+      <hr>
+      <div>
+        <form [formGroup]="customerForm" (ngSubmit)="createCustomer()">
+          <div class="row mt-3">
+            <div class="col-6"><span class="fontFamily">Full Name<span style="color: red"
+                                                                       class="asterisk-red">(*)</span> </span>
+              <input type="text" class="form-control" id="id" value="" formControlName="fullName">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.fullName.hasError('required') &&
+                 customerForm.controls.fullName.touched">Please input full name
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.fullName.hasError('pattern') &&
+                 customerForm.controls.fullName.touched">Please don't input special character or number in Full name
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.fullName.hasError('minlength') &&
+                 customerForm.controls.fullName.touched">Min length of full name is 6
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.fullName.hasError('maxlength') &&
+                 customerForm.controls.fullName.touched">Max length of full name is 50
+              </div>
+            </div>
+
+            <div class="col-6" formGroupName="account">
+              <span class="fontFamily">Username<span style="color: red" class="asterisk-red">(*)</span> </span>
+              <input type="text" class="form-control" id="name" formControlName="username">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('username').hasError('required') &&
+                 customerForm.controls.account.get('username').touched">Please input username
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('username').hasError('pattern') &&
+                 customerForm.controls.account.get('username').touched">Please don't input special character
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('username').hasError('maxlength') &&
+                 customerForm.controls.account.get('username').touched">Max length of username is 15
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="isUsernameUsed">Username is used, Please input another
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3" formGroupName="account">
+            <div class="col-6"><span class="fontFamily">Password<span style="color: red" class="asterisk-red">(*)</span></span>
+              <input type="password" class="form-control" id="password" formControlName="password">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('password').hasError('required') &&
+                 customerForm.controls.account.get('password').touched">Please input password
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('password').hasError('pattern') &&
+                 customerForm.controls.account.get('password').touched">Password must have at least 1
+                special character , number and alphabet
+              </div>
+            </div>
+            <div class="col-6"><span class="fontFamily">Confirm Password<span style="color: red"
+                                                                              class="asterisk-red">(*)</span></span>
+              <input type="password" class="form-control " id="confirmPassword" formControlName="confirmPassword">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('confirmPassword').hasError('required') &&
+                 customerForm.controls.account.get('confirmPassword').touched">Please input confirm password
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('confirmPassword').hasError('pattern') &&
+                 customerForm.controls.account.get('confirmPassword').touched">Password must have at
+                least 1 special character , number and alphabet
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.hasError('invalidPassword') &&
+                 customerForm.controls.account.get('password').touched&&
+                 customerForm.controls.account.get('confirmPassword').touched">Passwords do not match
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-4"><span class="fontFamily">Phone<span style="color: red"
+                                                                   class="asterisk-red">(*)</span></span>
+              <input type="text" class="form-control" id="phone" formControlName="phone">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.phone.hasError('required') &&
+                 customerForm.controls.phone.touched">Please input phone
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.phone.hasError('pattern') &&
+                 customerForm.controls.phone.touched">Must have 10 -12 number
+              </div>
+            </div>
+            <div class="col-4">
+                       <span class="fontFamily">Gender<span style="color: red"
+                                                            class="asterisk-red">(*)</span></span>
+              <select class="form-control" style="font-size: 18px" id="gender" formControlName="gender">
+                <option selected value="">Choose gender</option>
+                <option *ngFor="let g of genderList" [ngValue]="g">{{g.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.gender.hasError('required') &&
+                 customerForm.controls.gender.touched">Please choose gender
+              </div>
+            </div>
+            <div class="col-4"><span class="fontFamily">Date Of Birth<span style="color: red"
+                                                                           class="asterisk-red">(*)</span></span>
+              <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.dateOfBirth.hasError('required') &&
+                 customerForm.controls.dateOfBirth.touched">Please choose date of Birth
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.dateOfBirth.hasError('invalidAge') &&
+                 customerForm.controls.dateOfBirth.touched">You must be over 16 years old
+              </div>
+            </div>
+          </div>
+          <div class="mt-3" formGroupName="address">
+            <div class="fontFamily">Address
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <select class="form-control" style="font-size: 18px" formControlName="province" (change)="getProvince()">
+                  <option selected value=null>Choose province</option>
+                  <option *ngFor="let p of provinceList" [ngValue]="p">{{p.name}}</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <select class="form-control" style="font-size: 18px" formControlName="district" (change)="getDistrict()">
+                  <option selected value=null>Choose district</option>
+                  <option *ngFor="let d of districtList" [ngValue]="d">{{d.name}}</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <select class="form-control" style="font-size: 18px" formControlName="commune" >
+                  <option selected value=null>Choose commune</option>
+                  <option *ngFor="let c of communeList" [ngValue]="c">{{c.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div style="text-align: center">
+            <button class="btn mt-3 btn-secondary mr-3" [routerLink]="'/'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span style="font-family: Averta"> Cancel</span>
+            </button>
+            <button class="btn mt-3 btn-warning mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-person-plus" viewBox="0 0 16 16">
+                <path
+                  d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                <path fill-rule="evenodd"
+                      d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+              </svg >
+              <span style="font-family: Averta"> Sign Up</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

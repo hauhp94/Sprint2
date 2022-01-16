@@ -1,0 +1,25 @@
+#signUpForm {
+  background-image: url('../../../../assets/image/bg5.png');
+  background-size: cover;
+  background-repeat: inherit;
+  height: 100vh;
+  font-family: 'Numans', sans-serif;
+}
+
+.fontButton {
+  font-size: 20px;
+  color: black;
+  font-family: Averta;
+}
+
+.fontFamily {
+  font-size: 22px;
+  color: #FFF448;
+  font-family: Averta;
+}
+
+.fontError {
+  font-size: 20px;
+  color: red;
+  font-family: Averta;
+}

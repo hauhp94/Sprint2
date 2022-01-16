@@ -1,0 +1,26 @@
+.fontButton {
+  font-size: 20px;
+  color: black;
+  font-family: Averta;
+}
+
+.fontFamily {
+  font-size: 20px;
+  color: #FFF448;
+  font-family: Averta;
+}
+
+.fontError {
+  font-size: 20px;
+  color: red;
+  font-family: Averta;
+}
+
+.fontError {
+  font-size: 20px;
+  color: red;
+  font-family: Averta;
+}
+.content{
+  background-image: url("src/assets/image/hinh-nen-da-dang-nhap.jpg");
+}

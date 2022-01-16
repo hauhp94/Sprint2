@@ -1,0 +1,17 @@
+.fontButton {
+  font-size: 18px;
+  color: black;
+  font-family: Averta;
+}
+
+.fontFamily {
+  font-size: 20px;
+  color: #FFF448;
+  font-family: Averta;
+}
+
+.fontError {
+  font-size: 18px;
+  color: red;
+  font-family: Averta;
+}

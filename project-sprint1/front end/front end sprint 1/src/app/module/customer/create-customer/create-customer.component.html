@@ -1,0 +1,204 @@
+<div
+  style="background-image: url('../../../../assets/image/background.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
+  <div class="row">
+
+    <div class="container py-5" style=" border-radius: 5px">
+      <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);"><h2
+        style="text-align: center;color: #FFC312 ; ">Please enter full information</h2>
+        <hr>
+        <form [formGroup]="customerForm" (ngSubmit)="createCustomer()">
+          <div>
+            <div class="row mt-3">
+              <div class="col-6 "><label for="fullName" style="font-size: 22px;color: #FFF448">Full Name </label>
+                <span style="color: red" class="asterisk-red"> *</span>
+                <input type="text" class="form-control  " id="fullName" formControlName="fullName"
+                       placeholder="Nguyễn Văn A">
+
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.fullName.hasError('required') &&
+                 customerForm.controls.fullName.touched">Please Input Customer Name.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.fullName.hasError('minlength') &&
+                 customerForm.controls.fullName.touched">Please input full name, min 6 characters
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.fullName.hasError('maxlength') &&
+                 customerForm.controls.fullName.touched">Please input full name, max 50 characters
+                </div>
+              </div>
+
+              <div class="col-6"><label for="phone" style="font-size: 22px;color: #FFF448">Phone Number </label>
+                <span style="color: red" class="asterisk-red"> *</span>
+                <input type="text" class="form-control " id="phone" formControlName="phone"
+                       placeholder="0905123456">
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.phone.hasError('required') &&
+                 customerForm.controls.phone.touched">Please input phone.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.phone.hasError('pattern') &&
+                 customerForm.controls.phone.touched">Please input phone number correct format 0XXXXXXXXX, number 10~11.
+                </div>
+              </div>
+
+            </div>
+            <div class="row mt-3">
+              <div class="col-6"><label for="email" style="font-size: 22px;color: #FFF448">Email</label>
+                <span style="color: red" class="asterisk-red"> *</span>
+                <input type="text" class="form-control " id="email" formControlName="email"
+                       placeholder="a@gmail.com">
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.email.hasError('required') &&
+                 customerForm.controls.email.touched">Please input email.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.email.hasError('email') &&
+                 customerForm.controls.email.touched">Please input correct format, abc@abc .
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.email.hasError('emailExist') &&
+                 customerForm.controls.email.touched">Please input again, email exist.
+                </div>
+              </div>
+
+              <div class="col-6"><label for="dateOfBirth" style="font-size: 22px;color: #FFF448">Date Of Birth </label>
+                <input type="date" class="form-control " id="dateOfBirth" formControlName="dateOfBirth"
+                       value="19/1/2012">
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.dateOfBirth.hasError('required') &&
+                 customerForm.controls.dateOfBirth.touched">Please choose date of birth.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.dateOfBirth.hasError('invalidAge') &&
+                 customerForm.controls.dateOfBirth.touched">Please choose date of birth, enough 18 age.
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3" formGroupName="account">
+              <div class="col-6"><label for="username" style="font-size: 22px;color: #FFF448">Username </label>
+                <span style="color: red" class="asterisk-red"> *</span>
+                <input type="text" class="form-control " id="username" formControlName="username"
+                       placeholder="VanA">
+                <div class="fontError mt-1"
+                     *ngIf="customerForm.controls.account.get('username').hasError('required') &&
+                 customerForm.controls.account.touched">Please Input Username.</div>
+
+                <div class="fontError mt-1"
+                     *ngIf="isUsernameUsed">Username is used, Please input another</div>
+              </div>
+              <div class="col-6"><label for="password" style="font-size: 22px;color: #FFF448">Password </label>
+                <span style="color: red" class="asterisk-red"> *</span>
+                <input type="password" class="form-control " id="password" formControlName="password">
+                                <div class="fontError mt-1"
+                                     *ngIf="customerForm.controls.account.get('password').hasError('required') &&
+                                 customerForm.controls.account.touched">Please input new password.</div>
+                                <div class="fontError mt-1"
+                                     *ngIf="customerForm.controls.account.get('password').hasError('pattern') &&
+                                 customerForm.controls.account.touched">Please input min 6 character, include uppercase, lowercase, numbers.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-4"><label style="font-size: 22px;color: #FFF448">Address </label>
+            </div>
+
+          </div>
+          <div class="row mt-3" formGroupName="address">
+            <div class="col-4">
+              <select class="form-control " id="province" formControlName="province" (change)="getProvince()">
+                <option selected value=""> Please choose province</option>
+                <option *ngFor="let p of provinceList" [ngValue]="p">{{p.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.address.get('province').hasError('required') &&
+                     customerForm.controls.address.touched">Please choose province.
+              </div>
+            </div>
+
+            <div class="col-4">
+              <select class="form-control " id="district" formControlName="district" required (change)="getDistrict()">
+                <option selected value="">Please Choose District</option>
+                <option *ngFor="let d of districtList" [ngValue]="d">{{d.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.address.get('district').hasError('required') &&
+                     customerForm.controls.address.touched">Please choose district.
+              </div>
+            </div>
+
+            <div class="col-4">
+              <select class="form-control " id="commune" formControlName="commune" required >
+                <option selected value="">Please Choose Commune</option>
+                <option *ngFor="let c of communeList" [ngValue]="c">{{c.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.address.get('commune').hasError('required') &&
+                     customerForm.controls.address.touched">Please choose commune.
+              </div>
+            </div>
+          </div>
+
+          <div class=" row mt-3 ">
+            <div class="col-6 ">
+              <label for="gender" style="font-size: 22px;color: #FFF448">Gender </label>
+              <span style="color: red" class="asterisk-red"> *</span>
+              <select class="form-control" style="font-size: 18px" id="gender" formControlName="gender" required>
+                <option selected value="">Please Choose Gender</option>
+                <option *ngFor="let g of genderList" [ngValue]="g">{{g.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.gender.hasError('required') &&
+              customerForm.controls.gender.touched">Please input gender.
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="customerStatusId" style="font-size: 22px;color: #FFF448">Status </label>
+              <select class="form-control " id="customerStatusId" formControlName="customerStatus" required>
+                <option selected value="">Please Choose Status</option>
+                <option *ngFor="let s of statusList" [ngValue]="s">{{s.name}}</option>
+              </select>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.customerStatus.hasError('required') &&
+              customerForm.controls.customerStatus.touched">Please input customer Status.
+              </div>
+
+            </div>
+
+          </div>
+          <!--                    -->
+          <!--                    -->
+
+
+          <hr>
+          <div class="offset-4">
+            <button [routerLink]="['/customer/list']" class="btn mt-3 btn-warning mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              <span style="font-family: Averta">Back</span>
+            </button>
+            <button class="btn mt-3 btn-secondary mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span style="font-family: Averta">Reset</span>
+
+            </button>
+            <button type="submit" class="btn mt-3 btn-warning mr-3">
+
+              <span style="font-family: Averta">Create</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

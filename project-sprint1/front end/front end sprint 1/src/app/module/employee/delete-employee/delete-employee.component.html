@@ -1,0 +1,8 @@
+<div style="text-align: center">
+  <img src="assets/image/delete.png"  width="40%">
+  <h3 class="text-center">Delete confirm</h3>
+  <h5>Delete employee <span style="color:red;">{{data.fullName}}</span>, are you sure?</h5>
+  <h5 style="color: red">(*) Note: This action cannot be undone!</h5>
+  <button type="button" class="btn btn-secondary mr-2 mt-3" (click)="closeForm()">Close</button>
+  <button type="button" class="btn btn-danger mt-3" (keyup.enter)="deleteEmployee(data)" (click)="deleteEmployee(data)">Delete</button>
+</div>

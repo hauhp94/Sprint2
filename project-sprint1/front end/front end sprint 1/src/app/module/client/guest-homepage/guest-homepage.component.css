@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-main {
+  background-image: url("../../../../assets/image/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 25px 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: transparent;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #FFC312;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 500px;
+
+}
+
+.row {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);
+}
+
+th {
+  /*width: 50%;*/
+  height: 70px;
+  color: #FFC312;
+  font-size: 20px;
+  /*padding-left: 200px;*/
+}
+
+td {
+  color: white;
+  padding-left: 100px;
+}
+
+@media screen and (max-width: 1200px) {
+  th {
+    width: 50%;
+    height: 70px;
+    color: #FFC312;
+    font-size: 20px;
+    padding-left: 0px;
+  }
+
+  td {
+    color: white;
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .sidebar a {
+    float: left;
+  }
+
+  div.content {
+    margin-left: 0;
+  }
+
+  th {
+    /*width: 30%;*/
+    height: 70px;
+    color: #FFC312;
+    font-size: 20px;
+    padding-left: 0px;
+  }
+
+  td {
+    color: white;
+    padding-left: 0px;
+  }
+
+  .info {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+
+  th {
+    /*width: 30%;*/
+    height: 70px;
+    color: #FFC312;
+    font-size: 20px;
+    padding-left: 0px;
+  }
+
+  td {
+    color: white;
+    padding-left: 0px;
+  }
+}

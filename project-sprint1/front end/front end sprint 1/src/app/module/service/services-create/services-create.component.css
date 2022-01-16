@@ -1,0 +1,14 @@
+.border22px {
+  border-radius: 22px;
+}
+.style-span{
+  font-size: 22px;
+  color: #FFF448;
+  font-family:  Averta ;
+}
+.style-error{
+  color: red;
+  font-family: Averta;
+  font-size: 20px
+}
+

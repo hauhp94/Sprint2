@@ -1,0 +1,14 @@
+<div class="container-choose-payment">
+  <div class="content">
+    <h3 style="color: blue">Select a payment method</h3>
+  </div>
+  <h5>Payment amount <span style="color:red;">{{totalMoneys}} USD</span></h5>
+  <div class="button">
+    <div class="item-button">
+      <button type="button" class="btn btn-outline-info" (click)="payPal(totalMoneys)">Paypal</button>
+    </div>
+    <div class="item-button">
+      <button type="button" class="btn btn-outline-danger" (click)="payment()"> Cancel</button>
+    </div>
+  </div>
+</div>
