@@ -1,0 +1,195 @@
+<div class="container-fluid py-4">
+  <div class="container">
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border "><h2>Thông tin cá nhân</h2></legend>
+      <div class="border p-3">
+        <div class="container">
+          <form [formGroup]="employeeForm"  >
+          <div class="row">
+            <div  class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div formGroupName="accountDto">
+                <label for="tenDangNhap">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="tenDangNhap"
+                      formControlName="username" readonly>
+              </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                <label for="hoTen">Họ tên <span
+                  style="color: red">(*)</span></label>
+                <input type="text" class="form-control" id="hoTen"
+                       formControlName="name" required>
+              <div
+                *ngIf="!employeeForm.controls.name?.valid && (employeeForm.controls.name?.dirty || employeeForm.controls.name?.touched)">
+                <div [hidden]="!employeeForm.controls.name.errors.required">
+                  <p style="color: red">Họ tên không được để trống!</p>
+                </div>
+              </div>
+              <div
+                *ngIf="!employeeForm.controls.name?.valid && (employeeForm.controls.name?.dirty || employeeForm.controls.name?.touched)">
+                <div [hidden]="!employeeForm.controls.name.errors.maxLength">
+                  <p style="color: red">Họ tên không quá 30 kí tự!</p>
+                </div>
+              </div>
+            </div>
+            <div formGroupName="accountDto" class="col-12">
+              <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+
+                <label for="matKhau">Mật khẩu <span
+                  style="color: red">(*)</span></label>
+                <input type="password" class="form-control" id="matKhau"
+                   formControlName="password"   required >
+                <p style="color: red" *ngIf="employeeForm.controls.accountDto.get('password').hasError('required') &&
+                 employeeForm.controls.accountDto.get('password').touched">vui lòng nhập mật khẩu</p>
+              </div>
+
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="nhapLaiMatKhau">Nhập lại mật khẩu <span
+                  style="color: red">(*)</span></label>
+                <input type="password" class="form-control " id="nhapLaiMatKhau" formControlName="confirmPassword"
+                        required>
+                <p style="color: red" *ngIf="employeeForm.controls.accountDto.get('confirmPassword').hasError('required') &&
+                 employeeForm.controls.accountDto.get('confirmPassword').touched">vui lòng nhập lại mật khẩu</p>
+                <p style="color: red" *ngIf="employeeForm.hasError('passwordnotmatch',['accountDto']) &&
+                   employeeForm.dirty">mật khẩu không khớp</p>
+              </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="gioiTinh">Giới tính <span
+                  style="color: red">(*)</span></label>
+                <select id="gioiTinh" formControlName="genderDto"  class="form-control " [compareWith]="compareFn">
+                  <option *ngFor="let g of genderList" [ngValue]="g">{{g.name}}</option>
+                </select>
+                <p style="color: red" *ngIf="employeeForm.controls.genderDto.hasError('required') &&
+                 employeeForm.controls.genderDto.touched">vui lòng nhập giới tính</p>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="ngaySinh">Ngày sinh <span
+                  style="color: red">(*)</span></label>
+                <input type="date" class="form-control" id="ngaySinh" formControlName="birthDate" required>
+                <div
+                  *ngIf="!employeeForm.controls.birthDate?.valid && (employeeForm.controls.birthDate?.dirty || employeeForm.controls.birthDate?.touched)">
+                  <div [hidden]="!employeeForm.controls.birthDate.errors.required">
+                    <p style="color: red">Ngày sinh không được để trống!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" formControlName="email"
+                      required>
+                <div
+                  *ngIf="!employeeForm.controls.email?.valid && (employeeForm.controls.email?.dirty || employeeForm.controls.email?.touched)">
+                  <div [hidden]="!employeeForm.controls.email.errors.required">
+                    <p style="color: red">Email không được để trống!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="diaChi">Địa chỉ</label>
+                <input type="text" class="form-control" id="diaChi" formControlName="address"
+                        required>
+                <div
+                  *ngIf="!employeeForm.controls.address?.valid && (employeeForm.controls.address?.dirty || employeeForm.controls.address?.touched)">
+                  <div [hidden]="!employeeForm.controls.address.errors.required">
+                    <p style="color: red">Địa chỉ không được để trống!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="soDienThoai">Số điện thoại</label>
+                <input type="text" class="form-control" id="soDienThoai" formControlName="phone"
+                        required>
+                <div
+                        *ngIf="!employeeForm.controls.phone?.valid && (employeeForm.controls.phone?.dirty || employeeForm.controls.phone?.touched)">
+                  <div [hidden]="!employeeForm.controls.phone.errors.required">
+                    <p style="color: red">Số điện thoại không được để trống!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label for="cmnd">CMND/Hộ chiếu <span
+                  style="color: red">(*)</span></label>
+                <input type="text" class="form-control" id="cmnd" formControlName="idCard"
+                       required>
+                <div
+                        *ngIf="!employeeForm.controls.idCard?.valid && (employeeForm.controls.idCard?.dirty || employeeForm.controls.idCard?.touched)">
+                  <div [hidden]="!employeeForm.controls.idCard.errors.required">
+                    <p style="color: red">CMND/hộ chiếu không được để trống!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mt-3">
+                <label>Hình ảnh</label>
+                <div class="custom-file">
+                  <input  (change)="showPreview($event)" type="file" class="custom-file-input" id="inputGroupFile04"
+                         aria-describedby="inputGroupFileAddon04">
+                  <p class="custom-file-label" for="inputGroupFile04">Chọn ảnh</p>
+                </div>
+            </div>
+            </div>
+              <div
+                      *ngIf="!employeeForm.controls.image?.valid && (employeeForm.controls.image?.dirty || employeeForm.controls.image?.touched)">
+                  <div [hidden]="!employeeForm.controls.image.errors.required">
+                      <p style="color: red">Hình ảnh không được để trống!</p>
+                  </div>
+              </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12 d-flex justify-content-end mt-5">
+              <img style="border: 1px solid white;width: 300px;height: 300px" [src]="imgSrc">
+            </div>
+
+
+          </div>
+          </form>
+          <div class="text-center mt-3">
+            <button class="btn btn-secondary" [routerLink]="'/'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              <span class="align-middle">Hủy</span>
+            </button>
+            <button class="btn btn-warning ml-2" (click)="editEmployee()" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+                    bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+                    2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+                    .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+                    1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+                    2.5v11z"/>
+              </svg>
+              <span class="align-middle">Lưu</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

@@ -1,0 +1,294 @@
+<div class="container " style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);">
+
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Bộ Lọc</legend>
+    <div class="border p-3">
+      <div class="container">
+        <form [formGroup]="searchForm" (ngSubmit)="searchCustomerList();setPage()">
+          <div class="row mb-2">
+            <div class=" col-md-6 col-sm-6 col-xs-6 col-lg-6">
+              <label for="name" class="label-text">Mã Khách Hàng</label>
+              <input id="name" class="form-control" type="text" placeholder="Vui Lòng Nhập Mã Khách Hàng "
+                     formControlName="customerCode">
+              <div class="fontError mt-1" style="color: red"
+                   *ngIf="searchForm.controls.customerCode.hasError('pattern') &&
+                 searchForm.controls.customerCode.touched"> Vui Lòng Nhập Đúng Định Dạng KH-XXX. Trong Đó X Là Số
+                Nguyên.
+              </div>
+            </div>
+            <div class=" col-md-6 col-sm-6 col-xs-6 col-lg-6 ">
+              <label for="key" class="label-text">Từ Khóa</label>
+              <input id="key" class="form-control" type="text" placeholder="Vui Lòng Nhập Từ Khóa"
+                     formControlName="keySearch">
+              <div class="fontError mt-1" style="color: red"
+                   *ngIf="searchForm.controls.keySearch.hasError('maxlength') &&
+                 searchForm.controls.keySearch.touched"> Vui Lòng Nhập Không Quá 20 Kí Tự.
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12 d-flex justify-content-center mr-5">
+
+              <button style="margin-top: 10px;margin-right: 44px;margin-left: -14px" class=" btn btn-warning " type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                Tìm kiếm
+              </button>
+              <button (click)="resetForm()" style="margin-top: 10px;margin-left: -15px" class="btn btn-secondary"
+                      type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                     class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                  <path
+                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                  <path fill-rule="evenodd"
+                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                </svg>
+                Trở Lại
+              </button>
+
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Danh Sách Khách Hàng</legend>
+        <div class="table-responsive" *ngIf="customerList!=null;else nodata">
+          <table class="table table-hover  table-striped">
+            <thead>
+            <tr>
+            <tr style="background: #86BB71">
+              <th scope="col">STT</th>
+              <th scope="col">Mã</th>
+              <th scope="col">Tên</th>
+              <th scope="col">Ngày Sinh</th>
+              <th scope="col" style="width: 150px">Số Điện Thoại</th>
+              <th scope="col">Giới Tính</th>
+              <th scope="col">Số Lượng Hợp Đồng</th>
+              <th scope="col" style="width: 200px">Chức Năng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cus of customerList; let i=index">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{cus.customerCode}}</td>
+              <td style="text-align: left">{{cus.customerName | titlecase}}</td>
+              <td>{{cus.birthDate | date: 'dd-MM-yyyy'}}</td>
+              <td>{{cus.phone}}</td>
+              <td>{{cus.genderName}}</td>
+              <td>{{cus.amountContract}}</td>
+              <td class="text-center">
+
+                <button type="button" class="btn btn-success mr-2" data-toggle="modal"
+                        data-target=".viewModal"
+                        (click)="showInfoView(cus.customerCode,cus.customerAddress,cus.birthDate,
+                                              cus.email,cus.idCard,cus.customerName,
+                                              cus.phone,cus.genderName,cus.amountContract)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                       fill="currentColor" class="bi bi-hand-index"
+                       viewBox="0 0 16 16">
+                    <path
+                      d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 1 0 1 0V6.435a4.9 4.9 0 0 1 .106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 0 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.035a.5.5 0 0 1-.416-.223l-1.433-2.15a1.5 1.5 0 0 1-.243-.666l-.345-3.105a.5.5 0 0 1 .399-.546L5 8.11V9a.5.5 0 0 0 1 0V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                  </svg>
+                </button>
+
+                <button type="button" [routerLink]="['/customer/edit/',cus.customerId]" class="btn btn-warning mr-2"
+                        data-toggle="modal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                       fill="currentColor"
+                       class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg>
+                </button>
+
+                <button type="button" class="btn btn-danger mr-2" data-toggle="modal"
+                        data-target="#deleteModal"
+                        (click)="showInfoDelete(cus.customerName,cus.customerCode,cus.customerId)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                       fill="currentColor"
+                       class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #nodata>
+          <h5 style="color: rgba(255,91,32,0.99)" class="text-center">---------- Dữ Liệu Không Tồn Tại ----------</h5>
+        </ng-template>
+
+        <div class="row">
+          <div class="col-md-6" style="margin-bottom: 10px">
+
+            <a [routerLink]="'/customer/create'" style="color:green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                   class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+              </svg>
+              Thêm Mới Khách Hàng
+            </a>
+          </div>
+
+          <div class="col-md-6">
+            <!--            -->
+
+            <!--page-->
+            <div class="d-flex justify-content-end">
+              <ul class="pagination ">
+                <li class="page-item ">
+                  <input min="1" max="{{totalPage}}" class="page-link " type="number"
+                         style="color: #28a745;width: 60px;border-color: #00b74a;margin-right:5px;border-radius:4px"
+                         (change)="toPage($event.target.value -1)">
+                </li>
+                <!--                <li class="page-item "><a class="btn btn-outline-success mr-1" (click)="firstPage()">Đầu</a>-->
+                <!--                </li>-->
+                <li class="page-item "><a class="btn btn-outline-success mr-1" (click)="previousPage()">Trước</a>
+                </li>
+                <li class="page-item"><a class="btn btn-outline-success mr-1">{{page + 1}}</a></li>
+                <li class="page-item"><p class="btn btn-outline-success mr-1">/</p></li>
+                <li class="page-item"><a class="btn btn-outline-success mr-1">{{totalPage}}</a></li>
+                <li class="page-item"><a class="btn btn-outline-success mr-1 " (click)="nextPage()">Sau</a>
+                </li>
+                <!--                <li class="page-item "><a class="btn btn-outline-success mr-1" (click)="lastPage()">Cuối</a>-->
+                <!--                </li>-->
+              </ul>
+            </div>
+            <!--page-->
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>
+<!--Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success d-flex justify-content-center" style="color: white">
+        <h4 class="modal-title m-0" id="exampleModalLabel">Xác Nhận Xóa Khách Hàng</h4>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        <h5>Bạn Có Muốn Xóa Khách Hàng Này Không.</h5>
+        <p>Tên Khách Hàng: <span style="color: red">{{customerNameDelete | titlecase}}</span></p>
+        <p>Mã Khách Hàng: <span style="color: red">{{customerCodeDelete}}</span></p>
+        <h6 style="color: #ba8b00">Hành Động Này Sẽ Không Được Hoàn Tác.</h6>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">
+          Thoát
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteCustomerById()">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Delete Modal-->
+
+<!-- View Modal-->
+<div class="modal fade viewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-4">
+      <fieldset class="scheduler-border ">
+        <legend class="scheduler-border">Thông Tin Chi Tiết Khách Hàng</legend>
+        <div>
+          <div class="row mt-4">
+            <div class="col-6">
+              <label class="style-span">Mã Khách Hàng </label>
+              <input type="text" value="{{customerCodeView}}" class="form-control is-valid " id="validationServer05"
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+
+            <div class="col-6">
+              <label class="style-span">Tên Khách Hàng </label>
+              <input type="text" value="{{customerNameView | titlecase}}" class="form-control is-valid "
+                     aria-describedby="validationServer02Feedback" disabled>
+            </div>
+
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-6">
+              <label class="style-span">Ngày Sinh</label>
+              <input type="text" value="{{customerBirthDateView  | date: 'dd-MM-yyyy'}}" class="form-control is-valid "
+                     aria-describedby="validationServer02Feedback" disabled>
+
+            </div>
+            <div class="col-6">
+              <label class="style-span">CMND/Hộ Chiếu</label>
+              <input type="text" value="{{customerIdCardView}}" class="form-control is-valid "
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-6">
+              <label class="style-span ">Số Điện Thoại</label>
+              <input type="text" value="{{customerPhoneView}}" class="form-control is-valid "
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+
+            <div class="col-6">
+              <label class="style-span">Email</label>
+              <input type="text" value="{{customerEmailView}}" class="form-control is-valid "
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-3">
+              <label class="style-span">Giới Tính</label>
+              <input type="text" value="{{genderNameView}}" class="form-control is-valid "
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+
+            <div class="col-6">
+              <label class="style-span">Địa Chỉ </label>
+              <input type="text" value="{{customerAddressView | titlecase}}" class="form-control is-valid "
+                     aria-describedby="validationServer02Feedback" disabled>
+            </div>
+            <div class="col-3">
+              <label class="style-span ">Số Lượng Hợp Đồng</label>
+              <input type="text" value="{{amountContractView}}" class="form-control is-valid "
+                     aria-describedby="validationServer04Feedback" disabled>
+            </div>
+
+          </div>
+
+          <hr>
+          <div class="text-center">
+            <button class="btn btn-warning" data-dismiss="modal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              <span>Thoát</span>
+            </button>
+
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>
+<!-- View Modal-->
+

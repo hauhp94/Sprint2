@@ -1,0 +1,181 @@
+<div class="my-5">
+  <div class="container">
+    <fieldset class="scheduler-border center">
+      <legend class="scheduler-border">Thanh lý</legend>
+      <form [formGroup]="formCreate">
+        <div class="mt-5">
+          <div class="form-group" *ngIf="checkUpdate">
+            <label class="label-text">Mã hợp đồng<span style="color: red">*</span></label>
+            <input type="text" class="form-control" placeholder="HD-XXXX" formControlName="contractCode" disabled>
+            <div class="form-text" *ngIf="formCreate.get('contractCode')
+          .hasError('required') && formCreate.get('contractCode')
+          .touched" style="color: red">Mã hợp đồng bắt buộc nhập!
+            </div>
+            <div class="form-text" *ngIf="formCreate.get('contractCode')
+          .hasError('pattern')" style="color: red">Mã hợp đồng phải đúng định dạng HD-XXXX!
+            </div>
+
+          </div>
+          <div class="form-row ml-0">
+            <label class="label-text">Khách hàng<span style="color: red">*</span></label>
+          </div>
+          <div class="form-row" *ngIf="selectedCustomer == null">
+            <div class="form-group col-md-6 ">
+              <button type="button" class="btn btn-warning w-100 " style="color: white" data-toggle="modal"
+                      data-target="#modal-choose-customer" (click)="onChooseCustomer()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-person-check" viewBox="0 0 16 16">
+                  <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                  <path fill-rule="evenodd"
+                        d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                <span> Chọn khách hàng</span>
+              </button>
+            </div>
+            <div class="form-group col-md-6">
+              <button type="button" class="btn btn-success w-100" style="color: white" [routerLink]="'/customer/create'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                  <path fill-rule="evenodd"
+                        d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                <span> Thêm khách hàng</span>
+              </button>
+            </div>
+          </div>
+          <div style="color: red" *ngIf="customerName !== ''">
+            <fieldset class="scheduler-border">
+              <legend class="scheduler-border" style="font-size: 20px">Thông tin khách hàng</legend>
+              {{'Tên khách hàng: ' + customerName + ', ' +
+            'Phone: ' + selectedCustomer.phone + ', Giới tính: ' + selectedCustomer.gender.name}}
+            </fieldset>
+          </div>
+
+
+          <div class="form-row ml-0 mt-5">
+            <label class="label-text">Đồ thanh lý<span style="color: red">*</span></label>
+          </div>
+          <div>
+            <div class="form-group">
+              <button type="button" class="btn btn-warning " (click)="onChooseProduct()" [disabled]="checkUpdate"
+                      style="color: white" data-toggle="modal" data-target="#dothanhly">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                        d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+                </svg>
+                <span> Chọn đồ thanh lý</span>
+              </button>
+            </div>
+            <div class="form-group mr-1" *ngIf="contracts.length>0&& !checkUpdate">
+              <fieldset class="scheduler-border">
+                <legend class="scheduler-border" style="font-size: 20px">Đồ thanh lý</legend>
+                <span *ngFor="let i of contracts">
+            <button type="button" class="btn btn-secondary mr-1 mt-1" (click)="deleteProduct(i.productName,i.loan,i.contractId)">{{i.productName}}</button>
+            </span>
+              </fieldset>
+              <div><span style="color: #00b74a">
+                Tổng :</span>{{loan | currency: 'VND':'symbol':'1.0':'vi-VN'}} </div>
+            </div>
+            <div class="form-group mr-1" *ngIf="checkUpdate">
+              <fieldset class="scheduler-border">
+                <legend class="scheduler-border" style="font-size: 20px">Đồ thanh lý</legend>
+                <span>
+            <button type="button" class="btn btn-secondary mr-1 mt-1">{{receiveContract.productName}}</button>
+            </span>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="label-text">Tổng tiền<span style="color: red">*</span></label>
+            <input type="number" class="form-control" placeholder="VNĐ" formControlName="totalMoney" [(ngModel)]="changeLoan" #totalMoney>
+            <div class="mt-2" *ngIf="changeLoan!=''"> ( <span style="color: #00b74a">
+                Tổng tiền :</span>  {{changeLoan | currency: 'VND':'symbol':'1.0':'vi-VN'}} )</div>
+            <div class="form-text" *ngIf="formCreate.get('totalMoney')
+          .hasError('required') && formCreate.get('totalMoney')
+          .touched" style="color: red">Tổng tiền bắt buộc nhập!
+            </div>
+            <div class="form-text" *ngIf="formCreate.get('totalMoney')
+          .hasError('min') && formCreate.get('totalMoney')
+          .touched" style="color: red">Tổng tiền phải là số dương!
+            </div>
+            <div class="form-text" *ngIf="formCreate.get('totalMoney')
+          .hasError('max') && formCreate.get('totalMoney')
+          .touched" style="color: red">Tổng tiền phải nhhỏ hơn 100.000.000!
+            </div>
+            <div class="form-text" *ngIf="formCreate.get('totalMoney')
+          .hasError('pattern') && formCreate.get('totalMoney')
+          .touched" style="color: red">Tổng tiền bạn nhập phải là số!
+            </div>
+            <!--<div class="form-text" *ngIf="formCreate.get('totalMoney')
+          .hasError('total') && formCreate.get('totalMoney')
+          .touched" style="color: red">Tổng tiền bạn nhập phải lớn hơn tổng tiền sản phẩm!
+            </div>-->
+            <div class="form-text" *ngIf="totalMoney.value<=loan && loan!=0" style="color: red">Tổng tiền bạn nhập phải lớn hơn tổng tiền sản phẩm!
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label-text">Ngày thanh lý<span style="color: red">*</span></label>
+            <input type="date" class="form-control" formControlName="dateLiquidation" disabled>
+            <div class="form-text" *ngIf="formCreate.get('dateLiquidation')
+          .hasError('required') && formCreate.get('dateLiquidation')
+          .touched" style="color: red">Ngày thanh lý bắt buộc nhập!
+            </div>
+            <div class="form-text" *ngIf="formCreate.get('dateLiquidation')
+          .hasError('date')&& formCreate.get('dateLiquidation')
+          .dirty" style="color: red">Ngày thanh lý phải là ngày hiện tại!
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-secondary mx-3" (click)="reset()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                 class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>
+            <span> Hủy</span>
+          </button>
+          <button class="btn btn-success mt-1" [disabled]="formCreate.invalid" (click)="createLiquidationContract()" *ngIf="!checkUpdate">
+            <svg xmlns
+                   ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+        bi-pencil-square" viewBox="0 0 16 16">
+              <path d
+                      ="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+        2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+        .196-.12l6.813-6.814z"/>
+              <path fill-rule
+                      ="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+        1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+        2.5v11z"/>
+            </svg>
+            <span> Thêm hợp đồng</span>
+          </button>
+
+          <button class="btn btn-success mt-1" [disabled]="formCreate.invalid" (click)="updateLiquidationContract()" *ngIf="checkUpdate">
+            <svg xmlns
+                   ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+        bi-pencil-square" viewBox="0 0 16 16">
+              <path d
+                      ="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+        2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+        .196-.12l6.813-6.814z"/>
+              <path fill-rule
+                      ="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+        1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+        2.5v11z"/>
+            </svg>
+            <span> Thêm hợp đồng</span>
+          </button>
+        </div>
+      </form>
+    </fieldset>
+  </div>
+</div>
+
+

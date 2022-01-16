@@ -1,0 +1,184 @@
+<body>
+<div class="container py-4">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border"><h2>Tạo mới thông tin nhân viên</h2></legend>
+    <div class="border p-3">
+      <form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
+        <input type="text" hidden value="0" formControlName="flag">
+        <div class="container">
+          <div class="row">
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="code">Mã nhân viên<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="code" placeholder="NV-1234" maxlength="7" formControlName="employeeCode"
+                     class="form-control" #code>
+              <p style="color: red" *ngIf="employeeForm.controls.employeeCode.hasError('required') &&
+                 employeeForm.controls.employeeCode.touched">vui lòng nhập mã nhân viên</p>
+              <p style="color: red" *ngIf="employeeForm.controls.employeeCode.hasError('pattern') &&
+                 employeeForm.controls.employeeCode.touched">mã nhân viên không đúng định dạng</p>
+              <p style="color: red" *ngIf="msgExistCode!==''">{{msgExistCode}}</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="fullName">Họ tên<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="fullName" maxlength="35" placeholder="Nguyễn Văn A" formControlName="name"
+                     class="form-control">
+              <p style="color: red" *ngIf="employeeForm.controls.name.hasError('required') &&
+                 employeeForm.controls.name.touched">vui lòng nhập họ tên</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="dateOfBirth">Ngày sinh<span
+                class="span-red">(*)</span> </label>
+              <input type="date" id="dateOfBirth" formControlName="birthDate" class="form-control">
+              <p class="span-red" *ngIf="employeeForm.controls.birthDate.hasError('required') &&
+                 employeeForm.controls.birthDate.touched">vui lòng nhập ngày sinh</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="gender">Giới tính<span
+                class="span-red">(*)</span> </label>
+              <select id="gender" formControlName="genderDto" class="form-control ">
+                <option selected value="">-- Chọn giới tính --</option>
+                <option *ngFor="let g of genderList" [ngValue]="g">{{g.name}}</option>
+              </select>
+              <p class="span-red" *ngIf="employeeForm.controls.genderDto.hasError('required') &&
+                 employeeForm.controls.genderDto.touched">vui lòng nhập giới tính</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="email">Email<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="email" maxlength="35"
+                     placeholder="email@gmail.com" formControlName="email"
+                     class="form-control ">
+              <p class="span-red" *ngIf="employeeForm.controls.email.hasError('required') &&
+                 employeeForm.controls.email.touched">vui lòng nhập email</p>
+              <p class="span-red" *ngIf="employeeForm.controls.email.hasError('email') &&
+                 employeeForm.controls.email.touched">email không đúng định dạng</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="address">Địa chỉ<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="address" maxlength="50"
+                     placeholder="Đà Nẵng" formControlName="address"
+                     class="form-control ">
+              <p class="span-red" *ngIf="employeeForm.controls.address.hasError('required') &&
+                 employeeForm.controls.address.touched">vui lòng nhập địa chỉ</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="phone">Số điện thoại<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="phone" maxlength="11"
+                     placeholder="0905123456" formControlName="phone"
+                     class="form-control ">
+              <p class="span-red" *ngIf="employeeForm.controls.phone.hasError('required') &&
+                 employeeForm.controls.phone.touched">vui lòng nhập số điện thoại</p>
+              <p class="span-red" *ngIf="employeeForm.controls.phone.hasError('pattern') &&
+                 employeeForm.controls.phone.touched">số điện thoại không đúng định dạng </p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="idCard">CMND/ Hộ chiếu<span
+                class="span-red">(*)</span> </label>
+              <input type="text" id="idCard" placeholder="201612345" formControlName="idCard"
+                     class="form-control" maxlength="12">
+              <p class="span-red" *ngIf="employeeForm.controls.idCard.hasError('required') &&
+                 employeeForm.controls.idCard.touched">vui lòng nhập CMND/ hộ chiếu</p>
+              <p class="span-red" *ngIf="employeeForm.controls.idCard.hasError('minlength') &&
+                 employeeForm.controls.idCard.touched">vui lòng nhập ít nhất 9 số</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label for="salary">Lương(VND)<span
+                class="span-red">(*) </span></label>
+              <input type="number" [(ngModel)]="salary" id="salary" placeholder="10.000.000" formControlName="salary"
+                     class="form-control " max="100000000" step="500000" min="1000000">
+              <p class="span-red" *ngIf="employeeForm.controls.salary.hasError('required') &&
+                 employeeForm.controls.salary.touched">vui lòng nhập lương</p>
+              <p class="span-red" *ngIf="employeeForm.controls.salary.hasError('min') &&
+                 employeeForm.controls.salary.touched">vui lòng nhập lương >1.000.000</p>
+              <p class="mt-2" style="color: green" *ngIf="salary!=0">(tiền lương: {{salary|currency: 'VND':'symbol':'1.0':'vi-VN'}})</p>
+            </div>
+            <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+              <label>Hình ảnh<span
+                style="color: red">(*)</span></label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile04"
+                       aria-describedby="inputGroupFileAddon04" (change)="onFileSelected($event)" autocomplete="off">
+                <label class="custom-file-label" for="inputGroupFile04">Chọn ảnh</label>
+              </div>
+            </div>
+            <div formGroupName="accountDto" class="form-group col-12 d-inline">
+              <div class="row">
+                <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+                  <label for="username">Tên đăng nhập<span
+                    class="span-red">(*)</span> </label>
+                  <input type="text" id="username" maxlength="25"
+                         placeholder="hauhp" formControlName="username" class="form-control">
+                  <p class="span-red" *ngIf="employeeForm.controls.accountDto.get('username').hasError('required') &&
+                 employeeForm.controls.accountDto.get('username').touched">vui lòng nhập tên đăng nhập</p>
+                  <p style="color: red" *ngIf="msgExistUsername!==''">{{msgExistUsername}}</p>
+                </div>
+                <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+                  <label for="password">Mật khẩu<span
+                    style="color: red">(*)</span> </label>
+                  <div class="input-group">
+                    <input type="password" id="password" #password placeholder="abcd1234"
+                           formControlName="password" data-toggle="password"
+                           class="form-control " maxlength="25">
+                    <div class="input-group-append">
+                      <span class="input-group-text" (click)="changeInput(password)"><i class="far fa-eye"></i></span>
+                    </div>
+                  </div>
+                  <p class="span-red" *ngIf="employeeForm.controls.accountDto.get('password').hasError('required') &&
+                 employeeForm.controls.accountDto.get('password').touched">vui lòng nhập mật khẩu</p>
+                  <p class="span-red" *ngIf="employeeForm.controls.accountDto.get('password').hasError('minlength') &&
+                 employeeForm.controls.accountDto.get('password').touched">mật khẩu ít nhất 6 kí tự</p>
+                </div>
+                <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+                  <label for="confirmPassword">Nhập lại mật khẩu<span
+                    style="color: red">(*)</span> </label>
+                  <div class="input-group">
+                    <input type="password" id="confirmPassword" #confirmPassword placeholder="abcd1234"
+                           formControlName="confirmPassword" data-toggle="password"
+                           class="form-control " maxlength="25">
+                    <div class="input-group-append">
+                      <span class="input-group-text" (click)="changeInput(confirmPassword)"><i
+                        class="far fa-eye"></i></span>
+                    </div>
+                  </div>
+                  <p class="span-red" *ngIf="employeeForm.controls.accountDto.get('confirmPassword').hasError('required') &&
+                 employeeForm.controls.accountDto.get('confirmPassword').touched">vui lòng nhập lại mật khẩu</p>
+                  <p class="span-red" *ngIf="employeeForm.hasError('passwordnotmatch',['accountDto']) &&
+                   employeeForm.touched">mật khẩu không khớp</p>
+                </div>
+                <div class="form-group col-xl-6 col-lg-6 col-sm-12">
+                  <div class="form-group text-right">
+                    <img src="{{imgSrc}}" [hidden]="checkImg" width="300" height="300" class="img-thumbnail">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-xl-12 text-center">
+              <a class="btn btn-secondary mx-1" [routerLink]="['/employee/list/']">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                        d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                <span> Hủy</span></a>
+              <button type="submit" class="btn btn-warning mx-1" [disabled]="employeeForm.invalid">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                     fill="currentColor"
+                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+                <span class="align-middle"> Tạo mới</span></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </fieldset>
+</div>
+</body>
+

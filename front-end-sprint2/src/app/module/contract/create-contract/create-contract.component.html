@@ -1,0 +1,159 @@
+<div class="container py-5">
+  <div style="padding: 0 10%">
+    <fieldset class="create-contract">
+      <legend class="create-contract">Tạo mới hợp đồng</legend>
+      <div class="border p-3">
+        <div class="text-center mt-2">
+          <button (click)="openChooseCustomer()" class="btn btn-success fontButton mr-4">
+            <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+            </svg>
+            <span style="margin-left: 3px; color: white" class="align-middle">Chọn khách hàng</span>
+          </button>
+          <button class="btn btn-success fontButton" [routerLink]="['/customer/create']">
+            <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bibi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 12.5v11z"/>
+            </svg>
+            <span style="margin-left: 3px; color: white" >Thêm khách hàng</span>
+          </button>
+        </div>
+        <div>
+          <form [formGroup]="contractForm" (ngSubmit)="createContract()">
+            <div class="row mt-3">
+              <div class="col-6">
+                <label for="name" class="fontFamily">Tên khách hàng</label>
+                <span style="color: red">(*)</span>
+                <input type="text" class="form-control" id="name" value="{{customerName}}" placeholder="Tên khách hàng" readonly>
+              </div>
+              <div class="col-6">
+                <label for="productName" class="fontFamily">Đồ cầm</label>
+                <span style="color: red">(*)</span>
+                <input type="text" class="form-control" id="productName" formControlName="productName" placeholder="Đồ cầm">
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.productName.hasError('required') &&
+                 contractForm.controls.productName.touched">Vui lòng nhập đồ được cầm.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.productName.hasError('maxlength') &&
+                 contractForm.controls.productName.touched">Vui lòng nhập đúng định dạng đồ được cầm, không dài quá 50 kí tự.
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <label for="startDate" class="fontFamily">Ngày bắt đầu</label>
+                <span style="color: red">(*)</span>
+                <input type="date" class="form-control" id="startDate" formControlName="startDate" readonly>
+              </div>
+              <div class="col-6">
+                <label for="endDate" class="fontFamily">Ngày kết thúc</label>
+                <span style="color: red">(*)</span>
+                <input #endDate type="date" class="form-control" id="endDate" formControlName="endDate">
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.endDate.hasError('required') &&
+                 contractForm.controls.endDate.touched">Vui lòng chọn ngày kết thúc.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.endDate.hasError('invalidEndDate') &&
+                 contractForm.controls.endDate.touched">Vui lòng chọn ngày kết thúc phải lớn hơn ngày hiện tại.
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <label for="loan" class="fontFamily">Tiền cho vay</label>
+                <span style="color: red">(*)</span>
+                <input #loan (keyup)="calculateProfit(loan.value, endDate.value)" type="number" class="form-control" id="loan" [(ngModel)]="changeLoan" formControlName="loan" placeholder="Tiền cho vay">
+                <div class="mt-1" *ngIf="changeLoan!=''"> ( Tiền cho vay : {{changeLoan | currency: 'VND':'symbol':'1.0':'vi-VN'}} )</div>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.loan.hasError('required') &&
+                 contractForm.controls.loan.touched">Vui lòng nhập tiền cho vay.
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.loan.hasError('invalidLoan') &&
+                 contractForm.controls.loan.touched">Vui lòng nhập đúng tiền cho vay.
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="profit" class="fontFamily">Tiền lãi</label>
+                <span style="color: red">(*)</span>
+                <input type="number" class="form-control" id="profit" value="{{profitValue}}" formControlName="profit" placeholder="Tiền lãi" readonly>
+                <div class="mt-1" *ngIf="profitValue != 0"> ( Tiền lãi : {{profitValue | currency: 'VND':'symbol':'1.0':'vi-VN'}} )</div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <label for="typeProduct" class="fontFamily">Loại đồ</label>
+                <span style="color: red">(*)</span>
+                <select class="form-control" id="typeProduct" formControlName="typeProduct">
+                  <option selected value="">Chọn loại đồ</option>
+                  <option *ngFor="let t of typeProductList" [ngValue]="t">{{t.name}}</option>
+                </select>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.typeProduct.hasError('required') &&
+                 contractForm.controls.typeProduct.touched">Vui lòng chọn loại đồ.
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="productImage" class="fontFamily">Ảnh đồ được cầm</label>
+                <span style="color: red">(*)</span>
+                <div class="input-group ">
+                  <div class="custom-file">
+                    <input formControlName="productImage" type="file" (change)="showPreview($event)" class="custom-file-input" id="productImage">
+                    <label class="custom-file-label" for="productImage">
+                      {{pathImage.value !== '' ? selectedImage.name : 'Chọn ảnh'}}</label>
+                  </div>
+                </div>
+                <div class="fontError mt-1"
+                     *ngIf="contractForm.controls.productImage.hasError('required') &&
+                 contractForm.controls.productImage.touched">Vui lòng chọn ảnh đồ được cầm.
+                </div>
+                <div class="fontError mt-1">{{msgImage}}</div>
+              </div>
+            </div>
+
+            <div class="row mt-5">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <img style="border: 1px solid black; width: 100%;"
+                     src="{{image}}">
+              </div>
+              <div class="col-3"></div>
+            </div>
+            <hr>
+            <div class="text-center mb-3">
+              <a (click)="resetForm()" class="btn btn-secondary mx-3 fontButton">
+                <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                     class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                  <path
+                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                  <path fill-rule="evenodd"
+                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                </svg>
+                <span style="margin-left: 3px; color: white">Hủy</span>
+              </a>
+              <button class="btn btn-warning fontButton">
+                <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bibi-pencil-square" viewBox="0 0 16 16">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 12.5v11z"/>
+                </svg>
+                <span style="margin-left: 3px; color: white;">Tạo mới</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

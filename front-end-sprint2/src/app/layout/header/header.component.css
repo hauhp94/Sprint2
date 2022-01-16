@@ -1,0 +1,31 @@
+.dropdown-menu :hover {
+  background-color: #ffc107 ;
+}
+
+.icon-phone {
+  max-width: 26px;
+}
+
+.navbar-1 {
+  background-color: green;
+}
+
+.navbar-1 {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card {
+  border: none;
+  background-color: #f8f8f8;
+}
+
+@media screen and (max-width: 700px) {
+  .slogan, .hotline {
+    display: none;
+  }
+
+  .signin {
+    width: 90vw;
+    margin: 0px;
+  }
+}

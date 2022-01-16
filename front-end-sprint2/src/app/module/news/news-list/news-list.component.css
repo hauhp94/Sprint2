@@ -1,0 +1,85 @@
+.thumbnail {
+  overflow: hidden;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  transition-duration: 0.3s;
+}
+
+.thumbnail img:hover {
+  transform: scale(1.2);
+}
+
+.element {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.element1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.element1:hover{
+  color: orangered!important;
+  cursor: pointer;
+}
+
+.element2:hover{
+  color: orangered!important;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 400px) and (max-width: 860px) {
+  .imageHeight {
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 400px) {
+  .imageHeight {
+    height: 50px;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 860px) {
+  .imgCircle {
+    height: 230px;
+  }
+}
+
+@media only screen and (min-width: 540px) and (max-width: 699px) {
+  .imgCircle {
+    height: 180px;
+  }
+}
+
+
+@media only screen and (min-width: 380px) and (max-width: 539px) {
+  .imgCircle {
+    height: 130px;
+  }
+}
+
+.imgFace:hover {
+  transform: scale(1.1);
+}
+
+.imgFace {
+  display: block;
+  transition: all .3s ease;
+}
+
+.menu {
+  font-size: small;
+}
+
+.thumbnail{
+  border: none;
+}

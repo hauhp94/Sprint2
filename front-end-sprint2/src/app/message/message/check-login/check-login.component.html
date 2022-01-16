@@ -1,0 +1,9 @@
+<div onclick="noti()" style="position: relative" >
+  <img style="width: 70px;height: 70px" (click)="viewMessages()" class="ml-2"
+       *ngIf="isLoggedIn" [routerLink]="['/message']"
+       src="/assets/image/message.png">
+  <div style="position: absolute;top: 50%" *ngIf="message === 'receive'" (click)="receiveMessages()">
+    <img src="https://i0.wp.com/i646.photobucket.com/albums/uu185/vanhoai1111/th_42.gif?zoom=2">
+  </div>
+</div>
+<app-message *ngIf="!auto" hidden></app-message>

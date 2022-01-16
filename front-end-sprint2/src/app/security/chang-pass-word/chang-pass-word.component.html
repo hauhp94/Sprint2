@@ -1,0 +1,73 @@
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <div class="frame">-->
+<!--    <div class="nav text-center d-inline-block">-->
+<!--      <p class="signin-active"><a class="btn text-danger">Tài khoản của bạn đã hết hạn quá 30 ngày nên yêu cầu đổi mật khẩu</a></p>-->
+<!--      <p class="signin-active"><a class="btn text-success">{{username}}</a></p>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <form class="form-signin" [formGroup]="formPassword" (ngSubmit)="changePassword()">-->
+<!--        <div class="mb-4">-->
+<!--          <label for="username" class="text-warning">Mật khẩu mới.</label>-->
+<!--          <input id="username" class="form-styling mb-1" type="password" formControlName="newPassword" placeholder=""/>-->
+<!--          <small *ngIf="formPassword.get('newPassword')?.hasError('required')-->
+<!--                        && (formPassword.get('newPassword')?.pristine || formPassword.get('newPassword')?.dirty)"-->
+<!--                 class="text-danger ml-2 d-block">-->
+<!--            * Yêu cầu nhập mật khẩu mới.</small>-->
+<!--          <small *ngIf="(formPassword.get('newPassword')?.hasError('minlength') || formPassword.get('newPassword')?.hasError('maxlength'))-->
+<!--                        && formPassword.get('newPassword')?.dirty" class="text-danger ml-2 d-block">-->
+<!--            * Mật khẩu ít nhất 8 kí tự và tối đa 20 kí tự.</small>-->
+<!--        </div>-->
+<!--        <div class="mb-4">-->
+<!--          <label for="password" class="text-warning">Nhập lại mật khẩu</label>-->
+<!--          <input id="password" class="form-styling mb-1" type="password" formControlName="repeatNewPassword"-->
+<!--                 placeholder=""/>-->
+<!--          <small *ngIf="formPassword.get('repeatNewPassword')?.hasError('required')-->
+<!--                        && (formPassword.get('repeatNewPassword')?.pristine || formPassword.get('repeatNewPassword')?.dirty)"-->
+<!--                 class="text-danger ml-2 d-block">* Yêu cầu nhập lại mật khẩu.</small>-->
+<!--          <small *ngIf="formPassword.controls.repeatNewPassword.dirty && formPassword.errors?.checkPassWord"-->
+<!--                 class="text-danger ml-2 d-block">* Mật khẩu chưa khớp.</small>-->
+<!--        </div>-->
+<!--        <button class="btn-animate" [disabled]="formPassword.invalid"><a class="btn-signin text-light">Cập nhật</a>-->
+<!--        </button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+
+<div class="col-md-12">
+  <div class="card card-container">
+    <h5 class="text-danger text-center">Tài khoản đã quá hạn đăng nhập sau 30 ngày yêu cầu thay đổi mật khẩu</h5>
+    <img id="profile-img"
+         src="https://salt.tikicdn.com/cache/550x550/ts/product/85/93/a1/d0300827eb457c85158df904d1056c38.jpg"
+         class="profile-img-card w-50 h-50"/>
+    <h5 class="text-center text-success">{{username}}</h5>
+    <form [formGroup]="formPassword" (ngSubmit)="changePassword()" novalidate>
+      <div class="form-group">
+        <label for="username" class="text-warning">Mật khẩu mới.</label>
+        <input id="username" class="form-control" type="password" formControlName="newPassword" placeholder=""/>
+        <small *ngIf="formPassword.get('newPassword')?.hasError('required')
+                                && (formPassword.get('newPassword')?.pristine || formPassword.get('newPassword')?.dirty)"
+               class="alert alert-danger mt-1 d-block">
+          * Yêu cầu nhập mật khẩu mới.</small>
+        <small *ngIf="(formPassword.get('newPassword')?.hasError('minlength') || formPassword.get('newPassword')?.hasError('maxlength'))
+                                && formPassword.get('newPassword')?.dirty" class="alert alert-danger mt-1 d-block">
+          * Mật khẩu ít nhất 8 kí tự và tối đa 20 kí tự.</small>
+      </div>
+      <div class="form-group">
+        <label for="password2" class="text-warning">Nhập lại mật khẩu</label>
+        <input id="password2" class="form-control" type="password" formControlName="repeatNewPassword"
+               placeholder=""/>
+        <small *ngIf="formPassword.get('repeatNewPassword')?.hasError('required')
+                                && (formPassword.get('repeatNewPassword')?.pristine || formPassword.get('repeatNewPassword')?.dirty)"
+               class="alert alert-danger mt-1 d-block">* Yêu cầu nhập lại mật khẩu.</small>
+        <small *ngIf="formPassword.controls.repeatNewPassword.dirty && formPassword.errors?.checkPassWord"
+               class="alert alert-danger mt-1 d-block">* Mật khẩu chưa khớp.</small>
+      </div>
+      <div class="form-group m-3 text-center">
+        <button class="btn btn-primary btn-block">Thay đổi mật khẩu</button>
+      </div>
+    </form>
+  </div>
+</div>

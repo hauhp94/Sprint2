@@ -1,0 +1,19 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-success d-flex justify-content-center" style="color: white">
+      <h1 class="modal-title m-0" id="exampleModalLabel2" >Xác Nhận Xóa Hợp Đồng</h1>
+    </div>
+    <div class="modal-body" style="text-align: center">
+      <h3>Bạn có muốn xóa hợp đồng này không:</h3>
+      <p>Tên khách hàng: <span style="color: red">{{data.nameCustomer}}</span> </p>
+      <p>Mã hợp đồng: <span style="color: red">{{data.nameContractCode}}</span></p>
+      <h3 style="color: #ba8b00">Hành Động Này Sẽ Không Được Hoàn Tác.</h3>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-primary " id="cancel" type="button" (click)="dialogRef.close(false)">Thoát</button>
+          <button class="btn btn-danger" id="delete" type="button" (click)="dialogRef.close(true)">Xóa</button>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,103 @@
+<div class="row mt-5">
+  <div class="col-md-3 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);">
+    <article>
+      <ul class="list ">
+        <li class="ml-5" (click)="progress()"><a >Tài Chính</a></li>
+        <li class="ml-5" (click)="progress()"><a >Danh sách cầm đồ trong kho</a></li>
+        <li class="ml-5" [routerLink]="['/information-store/list-ten-contract']"><a  [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">10 hợp đồng mới nhất </a></li>
+        <li class="ml-5" [routerLink]="['/statistic/expected']"><a >Thống kê lợi nhuận</a></li>
+        <li class="ml-5" [routerLink]="['/information-store/history-store']"><a  [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Lịch sử giao dịch</a></li>
+      </ul>
+    </article>
+  </div>
+  <div class="col-md-9 ">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container-fluid px-0">
+          <div class="container">
+            <table class="table tab-content table-bordered">
+              <tr class=" nav-statistic">
+                <th class="text-center " [routerLink]="['/statistic/interest']"><a
+                                            style="text-decoration: none" class="a">Lợi nhuận từ tiền
+                  lãi </a></th>
+                <th class="text-center " [routerLink]="['/statistic/liquidation']"><a
+                                            style="text-decoration: none" class="a">Lợi nhuận từ thanh
+                  lý</a></th>
+                <th class="text-center" [routerLink]="['/statistic/expected']"><a
+                                           style="text-decoration: none" class="a">Lợi nhuận từ dự
+                  kiến</a></th>
+              </tr>
+            </table>
+            <fieldset class="scheduler-border">
+              <legend class="scheduler-border">Bộ lọc</legend>
+              <form [formGroup]="checkDateForm">
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label style="font-size: 20px;width: 300px;color: green">Giao dịch từ ngày:</label>
+                    <input type="date" class="form-control" aria-describedby="emailHelp" value="2020-01-01"
+                           placeholder="" formControlName="checkStartDate" [(ngModel)]="checkStartDate">
+                    <p *ngIf="checkDateForm.controls.checkStartDate.hasError('required')  &&
+                            checkDateForm.controls.checkStartDate.touched" style="color: red">Không được để trống
+                      !!!</p>
+                    <p style="color: red"
+                       *ngIf="checkDateForm.errors?.errorDateTo && checkDateForm.controls.checkStartDate.dirty">
+                      Ngày bắt đầu phải nhỏ hơn ngày đến!!!</p>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label class="label-text" style="font-size: 20px;color: green">Đến:</label>
+                    <input type="date" class="form-control" aria-describedby="emailHelp"
+                           placeholder="" formControlName="checkEndDate" [(ngModel)]="checkEndDate">
+                    <p *ngIf="checkDateForm.controls.checkEndDate.hasError('required')   &&
+                            checkDateForm.controls.checkStartDate.touched" style="color: red">Không được để trống
+                      !!!</p>
+                  </div>
+                  <div class="form-group col-md-3">
+
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <button style="margin-top: 10px; color: black" class="btn btn-warning ml-3" (click)="getStatistic()">
+                    Thống kê
+                  </button>
+                </div>
+              </form>
+
+              <div class="row ">
+                <div class=" col-md-12 mt-3  text-center ">
+                  <h4 class="label-text" style="color: green"> Tổng lợi nhuận: {{this.totalMoney | number}} VND</h4>
+
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class=scheduler-border>
+              <legend class="scheduler-border">Biểu đồ</legend>
+              <div class="row table-responsive">
+                <div id="chart">
+                  <apx-chart *ngIf="check"
+                             [series]="chartOptions.series"
+                             [chart]="chartOptions.chart"
+                             [yaxis]="chartOptions.yaxis"
+                             [xaxis]="chartOptions.xaxis"
+                             [labels]="chartOptions.labels"
+                             [stroke]="chartOptions.stroke"
+                             [plotOptions]="chartOptions.plotOptions"
+                             [markers]="chartOptions.markers"
+                             [fill]="chartOptions.fill"
+                             [tooltip]="chartOptions.tooltip"
+                  ></apx-chart>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

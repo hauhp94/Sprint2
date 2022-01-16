@@ -1,0 +1,9 @@
+.modal-dialog{
+  max-width: 100%;
+  margin: 0;
+}
+
+.dialog-container-custom .mat-dialog-container {
+  padding: 0;
+
+}

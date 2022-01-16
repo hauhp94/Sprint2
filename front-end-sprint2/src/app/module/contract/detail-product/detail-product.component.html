@@ -1,0 +1,20 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header bg-success d-flex justify-content-center" style="color: white">
+      <h1 class="modal-title m-0" id="exampleModalLabel2" >Chi tiết sản phẩm</h1>
+    </div>
+    <div class="modal-body" style="text-align: center">
+      <h3>Sản phẩm đã chọn:</h3>
+      <p>Tên sản phẩm: <span style="color: red">{{data.productName}}</span> </p>
+      <p>Giá sản phẩm: <span style="color: red">{{data.loan}}</span></p>
+      <h3 style="color: #ba8b00">Hành Động Này Sẽ Không Được Hoàn Tác.</h3>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <button class="btn btn-primary " id="cancel" type="button" (click)="dialogRef.close(false)">Thoát</button>
+      <button class="btn btn-danger" id="delete" type="button" (click)="dialogRef.close(true)">Xóa</button>
+    </div>
+  </div>
+</div>
+
+
+

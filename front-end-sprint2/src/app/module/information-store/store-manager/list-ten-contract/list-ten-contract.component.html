@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="container" style="height: 50px">
+          <h2 style="color: green; text-align: center">DANH SÁCH 10 HỢP ĐỒNG GẦN NHẤT</h2>
+        </div>
+        <fieldset class="scheduler-border">
+          <legend class="scheduler-border">Bộ lọc</legend>
+          <form [formGroup]="searchContractFrom">
+            <div class="form-row">
+              <div class="form-group col-md-3">
+
+              </div>
+              <div class="form-group col-md-3">
+                <label  class="label-text">Tên khách hàng</label>
+                <input type="text" class="form-control" formControlName="customer"   [(ngModel)]="name">
+              </div>
+              <div class="form-group col-md-3">
+                <label  class="label-text">Trạng thái</label>
+                <select class="form-control"  [(ngModel)]="status" formControlName="statusContract">
+                  <option selected value="">--- Chọn Status ----</option>
+                  <option *ngFor="let i of listStatusContract" value="{{i.name}}">{{i.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <button style="margin-top: 15px; " class=" btn btn-warning" (click)="searchContract()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                Tìm kiếm
+              </button>
+            </div>
+
+          </form>
+        </fieldset>
+        <fieldset class=scheduler-border>
+          <legend class="scheduler-border">Danh sách</legend>
+          <h2  class="text-center text-danger" *ngIf="contracts.length == 0" > Không Tìm Thấy Dữ Liệu</h2>
+          <table class="table table-striped table-hover" *ngIf="!(contracts.length == 0)">
+            <thead>
+            <tr style="background: #86BB71;" >
+              <th scope="col"  style="vertical-align: inherit; text-align: center">STT</th>
+              <th scope="col" style="vertical-align: inherit; text-align: center" >Mã hợp đồng</th>
+              <th  scope="col" style="vertical-align: inherit; text-align: center">Tên đồ</th>
+              <th  scope="col"  style="vertical-align: inherit; text-align: center">Tên khách hàng</th>
+              <th  scope="col"  style="vertical-align: inherit; text-align: center">Ngày làm hợp đồng</th>
+              <th  scope="col" style="vertical-align: inherit;text-align: center">Loại hợp đồng</th>
+              <th  scope="col" style="vertical-align: inherit; text-align: center">Trạng thái</th>
+              <th  scope="col" colspan="3" style="vertical-align: inherit; text-align: center">Chức năng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let contract of contracts, index as i">
+              <td style="text-align: end">{{i+1}}</td>
+              <td>
+                <div style="width: 103px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis">{{contract.contractCode}}</div>
+              </td>
+              <td>
+                <div style="width: 103px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;">
+                  {{contract.productName}}
+                </div>
+              </td>
+              <td>
+                <div style="width: 120px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;">
+                  {{contract.customer.name}}
+                </div>
+              </td>
+              <td>
+                <div style="width: 150px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis; text-align: center">
+                  {{contract.startDate}}
+                </div>
+              </td>
+              <td>
+                <div style="width: 110px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;">
+                  {{contract.typeContract.name}}
+                </div>
+              </td>
+              <td>
+                <div style="width: 113px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;">
+                  {{contract.statusContract.name}}
+                </div>
+              </td>
+              <td>
+                <div style="width: 142px; overflow: hidden;  white-space: nowrap; text-overflow: ellipsis;color: #fff028">
+                  <button  (click)="openDialogDetail(contract)" type="button" class="btn btn-success mr-2" data-toggle="modal"
+                           data-target=".bd-example-modal-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor" class="bi bi-hand-index"
+                         viewBox="0 0 16 16">
+                      <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 1 0 1 0V6.435a4.9 4.9 0 0 1 .106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 0 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.035a.5.5 0 0 1-.416-.223l-1.433-2.15a1.5 1.5 0 0 1-.243-.666l-.345-3.105a.5.5 0 0 1 .399-.546L5 8.11V9a.5.5 0 0 0 1 0V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                    </svg>
+                  </button>
+                  <button [routerLink]="['/information-store/edit-contract',contract.contractId]"  type="button" class="btn btn-warning mr-2" data-toggle="modal"
+                          data-target=".bd-example-modal-lg2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor"
+                         class="bi bi-pencil-square" viewBox="0 0 16 16">
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                      <path fill-rule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                  </button>
+                  <button (click)="onDeleteContract(contract.contractCode, contract.customer.name,contract.contractId)" type="button" class="btn btn-danger" data-toggle="modal"
+                          data-target="#exampleModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor"
+                         class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>

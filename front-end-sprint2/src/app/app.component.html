@@ -1,0 +1,7 @@
+<app-header></app-header>
+<router-outlet>
+  <div style="display: inline-block;position: sticky;top: 90vh;left: 92%; bottom: 20px" *ngIf="isLoggedIn">
+    <app-check-login></app-check-login>
+  </div>
+</router-outlet>
+<app-footer></app-footer>

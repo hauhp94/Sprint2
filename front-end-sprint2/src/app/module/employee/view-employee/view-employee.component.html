@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row-cols-6" style="margin-bottom: 10px">
+    <div class="col-md-12 bg-success d-flex justify-content-center" style="color: white">
+      <h2  id="exampleModalLabel2 " >Thông tin nhân viên</h2>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 10px">
+    <div class="col-md-6">
+      <p>Tên nhân viên:
+        <label style="color: red">{{employee.name}}</label>
+      </p>
+      <p>Mã nhân viên:
+        <label style="color: red">{{employee.employeeCode}}</label>
+      </p>
+      <p>Ngày sinh:
+        <label style="color: red">{{employee.birthDate}}</label>
+      </p>
+      <p>Số diện thoại:
+        <label style="color: red">{{employee.phone}}</label>
+      </p>
+      <p>Email:
+        <label style="color: red">{{employee.email}}</label>
+      </p>
+      <p>Giới tính:
+        <label style="color: red">{{employee.gender.name}}</label>
+      </p>
+      <p>Địa chỉ:
+        <label style="color: red">{{employee.address}}</label>
+      </p>
+      <p>Lương:
+        <label style="color: red">{{employee.salary| currency:'VND'}}</label>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <img src="{{employee.image}}" width="300" height="300" class="img-thumbnail">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center" >
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Thoát</button>
+    </div>
+  </div>
+</div>

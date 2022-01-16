@@ -1,0 +1,227 @@
+<div class="container py-4" style="border-radius: 5px">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border"><h2 style="text-align: center">Tạo mới khách hàng</h2></legend>
+    <div class="border">
+      <form class="form m-2" [formGroup]="createCustomerForm">
+        <div class="row m-3">
+          <div class="col-6">
+            <label for="maKhachHang" class="fontFamily">Mã khách hàng:</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="maKhachHang" formControlName="customerCode">
+            <p style="color: red" *ngIf="createCustomerForm.controls.customerCode.hasError('required') &&
+      createCustomerForm.controls.customerCode.dirty">
+              Vui lòng nhập mã khách hàng.
+            </p>
+            <p style="color: red" *ngIf="createCustomerForm.controls.customerCode.hasError('pattern') &&
+      createCustomerForm.controls.customerCode.dirty">
+              Vui lòng nhập mã khách hàng theo định dạng KH-XXXX (X từ 0 đến 9)
+            </p>
+          </div>
+          <div class="col-6">
+            <label for="ten" class="fontFamily">Họ và tên:</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="ten" formControlName="name">
+            <p style="color: red" *ngIf="createCustomerForm.controls.name.hasError('required') &&
+      createCustomerForm.controls.name.dirty">
+              Vui lòng nhập tên khách hàng.
+            </p>
+          </div>
+        </div>
+
+        <div class="row m-3">
+          <div class="col-6">
+            <label for="gioiTinh" class="fontFamily">Giới tính:</label>
+            <span style="color: red">(*)</span>
+            <select class="form-control" id="gioiTinh" formControlName="gender">
+              <option selected value="">--- Chọn giới tính ----</option>
+              <option *ngFor="let i of listGender" [ngValue]="i">{{i.name}}</option>
+            </select>
+            <p style="color: red" *ngIf="createCustomerForm.controls.gender.hasError('required') &&
+      createCustomerForm.controls.gender.touched">
+              Vui lòng chọn giới tính.
+            </p>
+          </div>
+          <div class="col-6">
+            <label for="ngaySinh" class="fontFamily">Ngày sinh:</label>
+            <span style="color: red">(*)</span>
+            <input type="date" class="form-control" id="ngaySinh" formControlName="birthDate">
+            <p style="color: red" *ngIf="createCustomerForm.controls.birthDate.hasError('required') &&
+      createCustomerForm.controls.birthDate.dirty">
+              Vui lòng chọn ngày sinh.
+            </p>
+            <p style="color: red" *ngIf="createCustomerForm.controls.birthDate.hasError('invalidAge')
+&& createCustomerForm.controls.birthDate.dirty">
+              Vui lòng chọn >= 18 tuổi.
+            </p>
+          </div>
+        </div>
+
+        <div class="row m-3">
+          <div class="col-6">
+            <label for="email" class="fontFamily">Email:</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="email" formControlName="email">
+            <p style="color: red" *ngIf="createCustomerForm.controls.email.hasError('required') &&
+      createCustomerForm.controls.email.dirty">
+              Vui lòng nhập email.
+            </p>
+          </div>
+          <div class="col-6">
+            <label for="diaChi" class="fontFamily">Địa chỉ:</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="diaChi" formControlName="address">
+            <p style="color: red" *ngIf="createCustomerForm.controls.address.hasError('required') &&
+      createCustomerForm.controls.address.dirty">
+              Vui lòng nhập địa chỉ.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="row m-3">
+          <div class="col-6">
+            <label for="sdt" class="fontFamily">Số điện thoại:</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="sdt" formControlName="phone">
+            <p style="color: red" *ngIf="createCustomerForm.controls.phone.hasError('required') &&
+      createCustomerForm.controls.phone.dirty">
+              Vui lòng nhập số điện thoại.
+            </p>
+            <p style="color: red" *ngIf="createCustomerForm.controls.phone.hasError('pattern') &&
+      createCustomerForm.controls.phone.dirty">
+              Vui lòng nhập số điện thoại theo định dạng 84-XXXXXXXXX (X từ 0 đến 9)
+            </p>
+          </div>
+          <div class="col-6">
+            <label for="cmnd" class="fontFamily">CMND/Hộ chiếu:</label>
+            <span style="color: red">(*)</span>
+            <input type="number" class="form-control" id="cmnd" formControlName="idCard">
+            <p style="color: red" *ngIf="createCustomerForm.controls.idCard.hasError('required') &&
+      createCustomerForm.controls.idCard.dirty">
+              Vui lòng nhập CMND/Hộ chiếu.
+            </p>
+          </div>
+        </div>
+
+        <div class="row m-3">
+          <div class="col-6">
+            <label for="inputGroupFile01" class="form-label">Ảnh khách hàng:</label>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                       (change)="showPreview($event)" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'"
+                       formControlName="image">
+                <label class="custom-file-label" for="inputGroupFile01">Chọn ảnh</label>
+              </div>
+            </div>
+            <p style="color: red" *ngIf="createCustomerForm.controls.image.hasError('required') &&
+      createCustomerForm.controls.image.dirty">
+              Vui lòng chọn ảnh khách hàng.
+            </p>
+          </div>
+          <div class="col-6">
+            <div class="text-center m-3" style="width: 80%; height: 80%">
+              <img src="{{image}}" width="100%" height="100%"/>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="row">
+            <div class="col-9"></div>
+            <div class="col-3">
+                <img *ngIf="isImage" style="float: right; border: 1px solid; width: 200px;height: 200px" src="{{image}}">
+            </div>
+        </div>-->
+        <hr>
+        <div class="text-center m-3">
+          <a class="btn btn-secondary fontButton" data-toggle="modal"
+             data-target="#huyModal" (click)="back()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            Hủy
+          </a>
+          <!--<a class="btn btn-secondary mx-3 fontButton" data-toggle="modal"
+             data-target="#resetModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                  <path
+                          d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                  <path fill-rule="evenodd"
+                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              Hủy
+          </a>-->
+          <a class="btn btn-warning fontButton m-3" data-toggle="modal"
+             data-target="#taoMoiModal" (click)="saveCustomer()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bibi-pencil-square" viewBox="0 0 16 16">
+              <path
+                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 12.5v11z"/>
+            </svg>
+            Tạo mới
+          </a>
+        </div>
+      </form>
+    </div>
+  </fieldset>
+</div>
+
+
+<!--<div class="modal fade fontChu" id="huyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Hủy tạo mới khách hàng<input readonly
+                                                                                     style="outline: none; border: none;"
+                                                                                     type="text" id="userName2">
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/deleteCustomer" method="get">
+        <input type="hidden" name="customerIdDelete" value="" id="customerIdDelete2">
+        <div class="modal-body">
+          Bạn muốn hủy tạo mới?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+          <button type="submit" class="btn btn-success">Đồng ý</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>-->
+
+<!--<div class="modal fade fontChu" id="taoMoiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Tạo mới khách hàng<input readonly
+                                                                                 style="outline: none; border: none;"
+                                                                                 type="text" id="userName1">
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/deleteCustomer" method="get">
+        <input type="hidden" name="customerIdDelete" value="" id="customerIdDelete1">
+        <div class="modal-body">
+          Bạn muốn tạo mới khách hàng?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+          <button type="submit" class="btn btn-success">Đồng ý</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>-->

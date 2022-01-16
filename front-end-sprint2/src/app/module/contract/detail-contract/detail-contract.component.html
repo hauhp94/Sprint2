@@ -1,0 +1,100 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content border-0">
+        <fieldset class="scheduler-border">
+          <legend class="scheduler-border">Chi tiết hợp đồng</legend>
+          <div class="" style=" border-radius: 5px">
+            <div>
+              <div>
+                <div class="row mt-4">
+                  <div class="col-6">
+                    <label class="label-text">Tên khách hàng (<span
+                      style="color: red">*</span>)</label>
+                    <input type="text"value="{{data.customer.name}}" class="form-control "
+                           readonly required>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="label-text">Tên đồ (<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.productName}}" class="form-control  " id="validationServer02"
+                           aria-describedby="validationServer02Feedback" readonly required>
+                  </div>
+
+                </div>
+
+                <div class="row mt-4">
+                  <div class="col-6">
+                    <label class="label-text">Tiền cho vay (<span
+                      style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.loan | currency: 'VND':'symbol':'1.0':'vi-VN'}}" class="form-control  "
+                           aria-describedby="validationServer02Feedback" readonly required>
+
+                  </div>
+                  <div class="col-6">
+
+                    <label class="label-text">Tiền lãi (<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.profit | currency: 'VND':'symbol':'1.0':'vi-VN'}}" class="form-control  "
+                           aria-describedby="validationServer02Feedback" readonly required>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-6">
+                    <label class="label-text">Ngày làm hợp đồng (<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.startDate}} " class="form-control  "
+                           aria-describedby="validationServer04Feedback" readonly required>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="label-text">Ngày kết thúc hợp đồng (<span
+                      style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.endDate}}" class="form-control  "
+                           aria-describedby="validationServer04Feedback" readonly required>
+                  </div>
+                </div>
+                <div class=" row mt-4">
+                  <div class="col-6">
+                    <label class="label-text">Loại hợp đồng (<span
+                      style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.typeContract.name}}" class="form-control  "
+                           aria-describedby="validationServer04Feedback" readonly required>
+                  </div>
+                  <div class="col-6">
+                    <label class="label-text">Trạng thái (<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.statusContract.name}}" class="form-control  "
+                           aria-describedby="validationServer04Feedback" readonly required>
+                  </div>
+                  <div class="col-6 mt-4">
+                    <label class="label-text">Mã hợp đồng (<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.contractCode}}" class="form-control"
+                           aria-describedby="validationServer03Feedback" required readonly>
+                  </div>
+                  <div class="col-6 mt-4">
+                    <label class="label-text">Loại đồ(<span style="color: red">*</span>)</label>
+                    <input type="text" value="{{data.typeProduct.name}}" class="form-control"
+                           aria-describedby="validationServer03Feedback" required readonly>
+                  </div>
+                  <br>
+                </div>
+              </div>
+              </div>
+            </div>
+          <div class="modal-footer d-flex justify-content-center mt-2">
+            <button type="button" class="btn btn-warning"  id="cancel" (click)="dialogRef.close(false)"
+                    data-dismiss="modal" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              Trở lại</button>
+            <button type="button" class="btn btn-primary" (click)="sendContract(data)" id="content" [routerLink]="'/create-liquidation-contract'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                <path
+                  d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+              </svg>
+              Thanh lý
+            </button>
+          </div>
+        </fieldset>
+  </div>
+</div>

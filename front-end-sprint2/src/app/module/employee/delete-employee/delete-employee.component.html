@@ -1,0 +1,17 @@
+<div class="modal-header bg-success d-flex justify-content-center" style="color: white">
+  <h4 class="modal-title" id="exampleModalLabel">Xác Nhận Xóa Nhân Viên</h4>
+</div>
+<div class="modal-body" style="text-align: center">
+  <h5>Bạn có muốn xóa nhân viên này không:</h5>
+  <p>Tên nhân viên: <span style="color: red">{{employee.name}}</span></p>
+  <p>Mã nhân viên: <span style="color: red">{{employee.employeeCode}}</span></p>
+  <h6 style="color: #ba8b00">Hành Động Này Sẽ Không Được Hoàn Tác.</h6>
+</div>
+<div class="modal-footer d-flex justify-content-center">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+    Thoát
+  </button>
+  <button type="button" class="btn btn-danger" (click)="confirm()">Xóa</button>
+</div>
+
+

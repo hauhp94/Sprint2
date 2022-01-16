@@ -1,0 +1,89 @@
+<div class="container mt-5">
+  <h1 style="color:green">
+    <marquee>TIN TỨC NỔI BẬT</marquee>
+  </h1>
+  <div>
+    <a style="color: #ffc107" [routerLink]="'/news/create'" *ngIf="isLoggedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+           class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+        <path
+          d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+      </svg>
+      <span style="font-size: 20px"><strong> Tạo mới tin tức</strong></span>
+    </a>
+  </div>
+  <div class="row mt-3">
+    <div class="col-8">
+      <div class="container">
+        <div class="row">
+          <div class="show card col-lg-6 col-md-6 col-sm-12 col-12 mb-3 thumbnail" style="width: 18rem;"
+               *ngFor="let n of news">
+            <a class="detailButton position-relative " href="#" role="button">
+              <img src="{{n.image}}" class="imageHeight card-img-top p-3" alt="..."
+                   style="width: 100%; height: 200px">
+            </a>
+            <div class="card-body">
+              <h5 class="element1 card-title text-success">{{n.title}}</h5>
+              <p class="element card-text text-dark" [innerHTML]="n.content"></p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3 mb-3">
+          <button aria-expanded="false" class="btn btn-outline-success"
+                  data-toggle="collapse" data-target="#boxnoidung">Xem thêm
+          </button>
+        </div>
+        <div class="collapse mt-4" id="boxnoidung">
+          <div class="row">
+            <div class="show card col-lg-6 col-md-6 col-sm-12 col-12 mb-3 thumbnail" style="width: 18rem;"
+                 *ngFor="let n of news2">
+              <a class="detailButton position-relative " href="#" role="button">
+                <img src="{{n.image}}" class="imageHeight card-img-top p-3" alt="..."
+                     style="width: 100%; height: 200px">
+              </a>
+              <div class="card-body">
+                <h5 class="element1 card-title text-success">{{n.title}}</h5>
+                <p class="element card-text text-dark" [innerHTML]="n.content"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-4">
+      <div class="container-fluid">
+        <div *ngFor="let n of news1">
+          <div class="row">
+            <div class="col-md-3">
+              <img class=" rounded-circle" src="{{n.image}}" alt="..." style="width: 100%; height: 55px">
+            </div>
+            <div class="col-md-9">
+              <p class="element2 card-title font-weight-bold">{{n.title}}</p>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <h3 class="d-flex justify-content-center mt-5 mb-4" style="color: orangered">Tư vấn viên</h3>
+        <div class="d-flex justify-content-center">
+          <img class="imgFace" src="assets/image/aKhanh.png" style="width: 80%; height: 70%">
+        </div>
+        <p class="d-flex justify-content-center mt-3">Mr.Khanh</p>
+        <p class="d-flex justify-content-center">Tư vấn viên - 0946.999.888</p>
+
+        <div class="d-flex justify-content-center mt-5">
+          <img class="imgFace" src="assets/image/aTra.png" style="width: 80%; height: 70%">
+        </div>
+        <p class="d-flex justify-content-center mt-3">Mr.Trà</p>
+        <p class="d-flex justify-content-center">Tư vấn viên - 0946.666.777</p>
+
+        <div class="d-flex justify-content-center mt-5">
+          <img class="imgFace" src="assets/image/aPhap.png" style="width: 80%; height: 70%">
+        </div>
+        <p class="d-flex justify-content-center mt-3">Mr.Pháp</p>
+        <p class="d-flex justify-content-center">Tư vấn viên - 0946.666.888</p>
+      </div>
+    </div>
+  </div>
+</div>

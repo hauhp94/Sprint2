@@ -1,0 +1,126 @@
+<div class="container py-5" style="border-radius: 5px">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border"><h2 style="text-align: center">Trả đồ</h2></legend>
+    <div class="border">
+      <form [formGroup]="paymentForm" class="m-2" (ngSubmit)="paymentContract()">
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Hợp đồng:</label>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-warning" (click)="chooseContract()"
+                    data-toggle="modal" data-target="#chonHD">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0
+                      .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0
+                       0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+              </svg>
+              Chọn hợp đồng
+            </button>
+          </div>
+        </div>
+
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Mã hợp đồng: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="contractCode">
+          </div>
+        </div>
+
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Tên khách hàng: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="customerName">
+          </div>
+
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Đồ cầm: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="productName">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Tiền cho vay(VND): </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="loan">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Tiền lãi(VND): </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="profit">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Ngày làm hợp đồng: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="startDate">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Ngày kết thúc: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="endDate">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Ngày trả đồ: </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="paymentDate">
+          </div>
+        </div>
+        <div class="row m-3">
+          <div class="col-3">
+            <label class="fontFamily">Số tiền thanh toán(VND): </label>
+          </div>
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="totalMoney">
+          </div>
+        </div>
+        <hr>
+        <div class="text-center m-3">
+          <a class="btn btn-secondary mx-3 fontButton" (click)="resetForm()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                 class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>
+            Hủy
+          </a>
+          <button type="submit" class="btn btn-warning fontButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bibi-pencil-square" viewBox="0 0 16 16">
+              <path
+                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 12.5v11z"/>
+            </svg>
+            Thanh toán
+          </button>
+        </div>
+      </form>
+    </div>
+  </fieldset>
+</div>
+

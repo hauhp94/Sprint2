@@ -1,0 +1,179 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content p-4">
+    <fieldset class="scheduler-border ">
+      <legend class="scheduler-border">Chỉnh sửa hợp đồng</legend>
+      <div>
+        <form *ngIf="editForm" [formGroup]="editForm">
+
+          <div class="row mt-4">
+            <div class="col-6" formGroupName="customer">
+              <label class="label-text">Tên khách hàng (<span style="color: red">*</span>)</label>
+              <input  class ="form-control" type="text"  formControlName="name" >
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.customer.get('name').hasError('required') &&
+                 editForm.controls.customer.get('name').touched">Vui lòng nhập đồ được cầm.
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.customer.get('name').hasError('maxlength') &&
+                 editForm.controls.customer.get('name').touched">Vui lòng nhập không quá 50 ký tự
+              </div>
+              <div class="style-error">
+                {{listError.name}}
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="label-text">Đồ Cầm (<span style="color: red">*</span>)</label>
+              <input  class ="form-control" type="text" formControlName="productName" >
+            </div>
+            <div class="fontError mt-1"
+                 *ngIf="editForm.controls.productName.hasError('required') &&
+                 editForm.controls.productName.touched">Vui lòng nhập đồ được cầm.
+            </div>
+            <div class="fontError mt-1"
+                 *ngIf="editForm.controls.productName.hasError('maxlength') &&
+                 editForm.controls.productName.touched">Vui lòng nhập đúng định dạng đồ được cầm, không dài quá 50 kí
+              tự.
+            </div>
+
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-6">
+              <label class="label-text">Ngày làm hợp đồng (<span style="color: red">*</span>)</label>
+              <input type="date" class="form-control" formControlName="startDate">
+
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.startDate.hasError('required') &&
+            editForm.controls.startDate.touched">Vui lòng chọn ngày bắt đầu.
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.startDate.hasError('invalidStartDate') &&
+                 editForm.controls.startDate.touched">Vui lòng chọn ngày bắt đầu lớn hơn ngày hiện tại.
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="label-text">Ngày kết thúc hợp đồng (<span
+                style="color: red">*</span>)</label>
+              <input #endDate type="date" class="form-control" id="endDate" formControlName="endDate">
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.endDate.hasError('required') &&
+                 editForm.controls.endDate.touched">Vui lòng chọn ngày kết thúc.
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.endDate.hasError('invalidEndDate') &&
+                 editForm.controls.endDate.touched">Vui lòng chọn ngày kết thúc phải lớn hơn ngày bắt đầu
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-6">
+              <label class="label-text">Tiền cho vay (<span style="color: red">*</span>)</label>
+              <input  #loan (keyup)="calculateProfit(loan.value, endDate.value)" type="text" class="form-control"
+                      id="loan"  [(ngModel)]="changeLoan"
+                      formControlName="loan" placeholder="Tiền cho vay">
+              <div class="mt-2" *ngIf="changeLoan!=''"> ( <span style="color: #00b74a">Tiền cho vay :</span>  {{changeLoan | currency: 'VND':'symbol':'1.0':'vi-VN'}} )</div>
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.loan.hasError('required') &&
+       editForm.controls.loan.touched">Vui lòng nhập tiền cho vay.
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="editForm.controls.loan.hasError('pattern') &&
+       editForm.controls.loan.touched">Vui lòng nhập số.
+              </div>
+            </div>
+            <div class="col-6">
+
+              <label class="label-text">Tiền lãi (<span style="color: red">*</span>)</label>
+              <input type="text" class="form-control" id="profit" value="{{profitValue}}"
+                     formControlName="profit" placeholder="Tiền lãi" readonly  [(ngModel)]="changeProfit">
+              <div class="mt-2" *ngIf="changeProfit!= 0"> (<span style="color: #00b74a"> Tiền lãi : </span>  {{changeProfit | currency: 'VND':'symbol':'1.0':'vi-VN'}} )</div>
+            </div>
+
+          </div>
+
+
+
+          <div class=" row mt-4">
+            <div class="col-6">
+              <label class="label-text">Loại hợp đồng (<span style="color: red">*</span>)</label>
+              <select class ="form-control" formControlName="typeContract" [compareWith]="compareFn1" class="custom-select">
+                <option *ngFor="let item of typeContractList" [ngValue]="item">{{item.name}}</option>
+              </select>
+              <div class="fontError mt-1" *ngIf="editForm.controls.typeContract.hasError('required') &&
+           editForm.controls.typeContract.touched"> Vui lòng chọn loại hợp đồng
+              </div>
+
+            </div>
+            <div class="col-6">
+              <label class="label-text">Trạng thái (<span style="color: red">*</span>)</label>
+              <select class ="form-control" formControlName="statusContract" [compareWith]="compareFn" class="custom-select">
+                <option *ngFor="let item of statusList" [ngValue]="item">{{item.name}}</option>
+              </select>
+              <div class="fontError mt-1" *ngIf="editForm.controls.statusContract.hasError('required') &&
+           editForm.controls.statusContract.touched"> Vui lòng trạng thái
+              </div>
+            </div>
+          </div>
+
+          <div class=" row mt-4">
+            <div class="col-6">
+              <label class="label-text">Mã hợp đồng (<span style="color: red">*</span>)</label>
+              <input class ="form-control" type="text" formControlName="contractCode" required readonly>
+            </div>
+            <div class="col-6 ">
+              <label class="label-text">Loại đồ (<span style="color: red">*</span>)</label>
+              <select class ="form-control" formControlName="typeProduct" [compareWith]="compareFn2" class="custom-select" readonly>
+                <option *ngFor="let item of typeProductList" [ngValue]="item">{{item.name}}</option>
+              </select>
+              <div class="fontError mt-1" *ngIf="editForm.controls.typeProduct.hasError('required') &&
+           editForm.controls.typeProduct.touched"> Vui lòng trạng thái
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="text-center">
+            <button class="btn btn-warning" (click)="back()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+              <span>Hủy</span>
+            </button>
+
+            <button class="btn btn-secondary mx-3" (click)="reset()" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                   class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                <path
+                  d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                <path fill-rule="evenodd"
+                      d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+              </svg>
+              <span>Khôi phục</span>
+            </button>
+            <button class="btn btn-warning"  (keyup.enter)="$event" (click)="edit()">
+              <svg xmlns
+                     ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+        bi-pencil-square" viewBox="0 0 16 16">
+                <path d
+                        ="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+        2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+        .196-.12l6.813-6.814z"/>
+                <path fill-rule
+                        ="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+        1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+        2.5v11z"/>
+              </svg>
+              <span>Lưu</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </fieldset>
+  </div>
+</div>

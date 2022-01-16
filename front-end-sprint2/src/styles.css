@@ -1,0 +1,5 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+.dialog-container-custom .mat-dialog-container {
+  padding: 0;
+}
+
